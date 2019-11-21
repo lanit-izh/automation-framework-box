@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" packages="scenarioReporter">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{DEFAULT}: [%highlight{%5p}] : %c{1}(%M) | %m%n"/>
+        </Console>
+        <CucumberAppender name="cucumber">
+            <PatternLayout pattern="%d{DEFAULT}: [%highlight{%5p}] : %c{1}(%M) | %m%n"/>
+        </CucumberAppender>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="cucumber"/>
+        </Root>
+        <Logger name="org.springframework" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+    </Loggers>
+</Configuration>

@@ -1,0 +1,38 @@
+#File for configuring geckoDriver
+#Possible options:
+# binary - String. Path to gecko binary.
+# firefoxProfileName - String. Name of firefox profile, that should be loaded.
+# extensions - List<String>. List of paths to firefox extensions.
+# preferences - Map<String, String>. Map of preferences for firefox.
+# arguments - List<String>. Arguments for geckodriver.
+# headless - boolean. Run firefox in headless mode.
+# disableFirefoxLogging - boolean. Disables firefox browser common logging.
+# enableVNC - boolean. Enables VNC.
+
+capabilities:
+  gecko: true
+  marionette: true
+  # enableVNC: false
+  nativeEvents: true
+
+preferences:
+  plugin.default.state: 2
+  focusmanager.testmode: false
+  browser.tabs.remote.autostart.2: false
+  layout.spellcheckDefault: 0
+  devtools.selfxss.count: 1500
+#  dom.webnotifications.enabled: false
+#  dom.disable_beforeunload: true
+#  dom.popup_maximum: 0
+#  privacy.popups.showBrowserMessage: false
+
+#version: 47.0
+
+firefoxProfileName: default
+
+extensions:
+#- src/main/resources/drivers/firefox_cryptopro_extension_latest.xpi
+#- src/main/resources/drivers/blitz_smart_card_plugin_adapter-1.1.7-an+fx.xpi
+#- src/main/resources/drivers/multipass.xpi
+
+disableFirefoxLogging: true

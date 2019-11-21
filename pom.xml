@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ru.lanit.at</groupId>
+    <artifactId>at-sample</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+
+    <properties>
+        <compiler.version>1.8</compiler.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <allure.version>2.12.1</allure.version>
+        <fork.count>2</fork.count>
+        <lanit.at.framework.version>4.0.4-SNAPSHOT</lanit.at.framework.version>
+        <aspectj.version>1.9.4</aspectj.version>
+        <dependency.locations.enabled>false</dependency.locations.enabled>
+        <javassist.version>3.12.1.GA</javassist.version>
+        <testng.version>6.14.3</testng.version>
+        <tags/>
+    </properties>
+
+
+    <build>
+        <testResources>
+            <testResource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+            <testResource>
+                <directory>src/test/resources/config</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
+        <plugins>
+            <!-- display active profile in compile phase -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-help-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>show-profiles</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>active-profiles</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M3</version>
+                <configuration>
+                    <argLine>
+                        -Xmx4G
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <systemPropertyVariables>
+                        <dataproviderthreadcount>${fork.count}</dataproviderthreadcount>
+                        <parallel>methods</parallel>
+                        <application.properties>/application.properties</application.properties>
+                    </systemPropertyVariables>
+
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+        </plugins>
+    </build>
+    <!-- profiles -->
+    <profiles>
+        <!-- browsers -->
+        <profile>
+            <id>1firefox</id>
+            <properties>
+                <browser>firefox</browser>
+                <browser.config>config/browser.config/geckodriver.config.yaml</browser.config>
+            </properties>
+        </profile>
+        <profile>
+            <id>2chrome</id>
+            <properties>
+                <browser>chrome</browser>
+                <browser.config>config/browser.config/chromedriver.config.yaml</browser.config>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>3opera</id>
+            <properties>
+                <browser>opera</browser>
+                <browser.config>config/browser.config/opera.config.yaml</browser.config>
+            </properties>
+        </profile>
+        <profile>
+            <id>4edge</id>
+            <properties>
+                <browser>edge</browser>
+                <browser.config>config/browser.config/edge.config.yaml</browser.config>
+            </properties>
+
+        </profile>
+
+
+        <!-- Run Type -->
+        <profile>
+            <id>5remote</id>
+            <properties>
+                <remote>true</remote>
+                <hub_url>http://localhost:4444/wd/hub/</hub_url>
+            </properties>
+        </profile>
+
+        <!-- STAND -->
+        <profile>
+            <id>6test</id>
+            <properties>
+                <site.url>http://ya.ru/</site.url>
+            </properties>
+        </profile>
+        <profile>
+            <id>7prod</id>
+            <properties>
+                <site.url>http://yandex.ru/</site.url>
+            </properties>
+        </profile>
+        <profile>
+            <id>8proxy</id>
+            <properties>
+                <proxy>true</proxy>
+                <proxy_config>proxy.config.yaml</proxy_config>
+            </properties>
+        </profile>
+    </profiles>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.lanit-izh</groupId>
+            <artifactId>automation-framework-core</artifactId>
+            <version>${lanit.at.framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>4.2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-cucumber4-jvm</artifactId>
+            <version>2.12.1</version>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java8</artifactId>
+            <scope>test</scope>
+            <version>4.2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.26</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.26</version>
+        </dependency>
+    </dependencies>
+
+</project>
