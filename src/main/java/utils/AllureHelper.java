@@ -21,4 +21,8 @@ public class AllureHelper {
     public static void attachPageSource(byte[] bytes) {
         Allure.getLifecycle().addAttachment("Page source", "text/html", "html", bytes);
     }
+
+    public static void setStepStatusBroken(String description) {
+        Allure.getLifecycle().updateStep(stepResult -> stepResult.setDescription(description));
+    }
 }

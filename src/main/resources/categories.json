@@ -1,0 +1,36 @@
+[
+  {
+    "name": "Пропущенные",
+    "matchedStatuses": [
+      "skipped"
+    ]
+  },
+  {
+    "name": "Пройденные",
+    "matchedStatuses": [
+      "passed"
+    ]
+  },
+  {
+    "name": "Неизвестные",
+    "matchedStatuses": [
+      "unknown"
+    ]
+  },
+  {
+    "name": "Ошибки фреймворка",
+    "matchedStatuses": [
+      "failed",
+      "broken"
+    ],
+    "traceRegex": ".*FrameworkRuntimeException.*"
+  },
+  {
+    "name": "Софт ассерты",
+    "matchedStatuses": [
+      "failed",
+      "broken"
+    ],
+    "messageRegex": ".*The following asserts failed.*"
+  }
+]

@@ -16,7 +16,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <allure.version>2.12.1</allure.version>
         <fork.count>2</fork.count>
-        <lanit.at.framework.version>4.0.4-SNAPSHOT</lanit.at.framework.version>
+        <lanit.at.framework.version>4.0.3</lanit.at.framework.version>
         <aspectj.version>1.9.4</aspectj.version>
         <dependency.locations.enabled>false</dependency.locations.enabled>
         <javassist.version>3.12.1.GA</javassist.version>
@@ -89,6 +89,33 @@
                         <version>${aspectj.version}</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.2</version>
+                <executions>
+                    <execution>
+                        <id>copy-categories-json</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/allure-results</outputDirectory>
+                            <overwrite>true</overwrite>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/src/main/resources</directory>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>categories.json</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
         </plugins>

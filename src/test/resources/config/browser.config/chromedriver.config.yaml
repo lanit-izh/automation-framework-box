@@ -1,5 +1,6 @@
 #File for configuring chromedriver
 #Possible options:
+#capabilities
 # arguments - List<String>. Arguments for chromedriver.
 # extensions - List<String>. List of paths to chrome extensions.
 # encodedExtensions - List<String>. List of paths to encoded chrome extensions.
