@@ -157,7 +157,6 @@ public final class CommonStepsLibrary extends BaseSteps {
     @И("активировать чекбокс")
     public void selectCheckbox() {
         CheckBox checkBox = getUIElement(CheckBox.class);
-        ;
         checkBox.setChecked(true);
     }
 
@@ -286,17 +285,17 @@ public final class CommonStepsLibrary extends BaseSteps {
 
     @И("подождать, когда элемент {element} станет видимым")
     public void waitUntilVisible(UIElement element) {
-        element.waitUntil(displayed());
+        element.should(displayed());
     }
 
     @И("подождать, когда элемент {element} исчезнет")
     public void waitUntilInVisible(UIElement element) {
-        element.waitUntil(not(displayed()));
+        element.should(not(displayed()));
     }
 
     @И("подождать, когда элемент {element} станет доступен")
     public void waitUntilEnabled(UIElement element) {
-        element.waitUntil(EnabledMatcher.enabled());
+        element.should(EnabledMatcher.enabled());
     }
 
     @И("элемент {element} присутствует на странице")

@@ -35,9 +35,9 @@ public class ExtendedAssert extends SoftAssert {
             onAssertFailure(a, ex);
             m_errors.put(ex, a);
             AllureHelper.attachTxt("Error message", ex.getLocalizedMessage());
+            AllureHelper.setStepStatusBroken("SoftAssert:" + ex.getMessage());
             DriverManager driverManager = Context.getInstance().getBean(DriverManager.class);
             if (driverManager.isActive()) {
-                System.out.println("ВЫполнение скриншота софтАссерта");
                 AllureHelper.attachScreenShot("SoftAssert", Context.getInstance().getBean
                         (ScreenShooter.class).takeScreenshot());
             }

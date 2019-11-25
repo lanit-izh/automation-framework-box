@@ -14,6 +14,4 @@ public class NewSampleSteps extends BaseSteps {
             throw new FrameworkRuntimeException("Не указан стенд, установите урл для стенда выполнения");
         getDriver().get(url);
     }
-
-
 }
