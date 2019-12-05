@@ -2,18 +2,17 @@
 <Configuration status="WARN" packages="scenarioReporter">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{DEFAULT}: [%highlight{%5p}] : %c{1}(%M) | %m%n"/>
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%highlight{%5p}] [%t] %c{1}(%M) - %msg%n"/>
         </Console>
-        <CucumberAppender name="cucumber">
-            <PatternLayout pattern="%d{DEFAULT}: [%highlight{%5p}] : %c{1}(%M) | %m%n"/>
-        </CucumberAppender>
     </Appenders>
     <Loggers>
         <Root level="info">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="cucumber"/>
         </Root>
-        <Logger name="org.springframework" level="info" additivity="false">
+        <Logger name="org.springframework" level="info" additivity="true">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="com.consol.citrus" level="info" additivity="true">
             <AppenderRef ref="Console"/>
         </Logger>
     </Loggers>
