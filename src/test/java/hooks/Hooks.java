@@ -1,5 +1,6 @@
 package hooks;
 
+import com.consol.citrus.report.MessageTracingTestListener;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -32,6 +33,8 @@ public class Hooks extends BaseSteps {
             AllureHelper.attachScreenShot("Скриншот последней операции", getScreenShooter().takeScreenshot());
             shutdownDriver();
         }
+        MessageTracingTestListener messageTracingTestListener = (MessageTracingTestListener) getEndpointByName("messageTracingTestListener");
+        messageTracingTestListener.onTestFinish(getCitrusRunner().getTestCase());
         assertsManager.softAssert().assertAll();
         assertsManager.softAssert().flush();
     }

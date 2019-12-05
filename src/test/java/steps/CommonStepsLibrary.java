@@ -18,7 +18,6 @@ import ru.lanit.at.pages.element.UIElement;
 import ru.yandex.qatools.matchers.webdriver.EnabledMatcher;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -44,33 +43,6 @@ public final class CommonStepsLibrary extends BaseSteps {
     public void checkPageTitle(String expectedTitle) {
         String actualTitle = getCurrentPage().getWrappedDriver().getTitle();
         assertsManager.softAssert().assertTrue(expectedTitle.equalsIgnoreCase(actualTitle), "Ожидалось что тайтл страницы '" + expectedTitle + "', фактически:'" + actualTitle + "'");
-    }
-
-
-    @И("на текущей странице перейти к блоку {string}")
-    public void focusOnBlock(String blockNameStr) {
-        String[] blocks = blockNameStr.split(">");
-        setCurrentBlockByName(blocks[0]);
-        if (blocks.length > 1) {
-            focusOnBlockInBlock(blockNameStr.substring(blockNameStr.indexOf(">") + 1));
-        }
-    }
-
-    @И("на текущей странице перейти к блоку {string} - {string}")
-    public void focusOnBlockWith(String blockNameStr, String param) {
-        String[] blocks = blockNameStr.split(">");
-        String[] params = param.split(",");
-        setCurrentBlockByName(blocks[0], params);
-        if (blocks.length > 1) {
-            focusOnBlockInBlock(blockNameStr.substring(blockNameStr.indexOf(">") + 1));
-        }
-    }
-
-
-    @И("^в текущем блоке перейти к блоку '(.*)'$")
-    public void focusOnBlockInBlock(String blockNameStr) {
-        Arrays.stream(blockNameStr.split(">"))
-                .forEach(blockName -> setCurrentBlockByName(blockName.trim()));
     }
 
 
@@ -363,13 +335,6 @@ public final class CommonStepsLibrary extends BaseSteps {
     public void switchToWindow(String pageTitle, String pageName) {
         switchToWindow(pageTitle);
         changePageTo(pageName);
-    }
-
-    @И("^завершить тест$")
-    public void finish() {
-        shutdownDriver();
-        assertsManager.softAssert().assertAll();
-        assertsManager.flushAsserts();
     }
 
     private void switchToWindow(String pageTitle) {

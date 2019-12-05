@@ -16,11 +16,12 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <allure.version>2.12.1</allure.version>
         <fork.count>2</fork.count>
-        <lanit.at.framework.version>4.0.3</lanit.at.framework.version>
+        <lanit.at.framework.version>4.0.5</lanit.at.framework.version>
         <aspectj.version>1.9.4</aspectj.version>
         <dependency.locations.enabled>false</dependency.locations.enabled>
         <javassist.version>3.12.1.GA</javassist.version>
         <testng.version>6.14.3</testng.version>
+        <citrus.version>2.8.0</citrus.version>
         <tags/>
     </properties>
 
@@ -124,14 +125,14 @@
     <profiles>
         <!-- browsers -->
         <profile>
-            <id>1firefox</id>
+            <id>1_firefox</id>
             <properties>
                 <browser>firefox</browser>
                 <browser.config>config/browser.config/geckodriver.config.yaml</browser.config>
             </properties>
         </profile>
         <profile>
-            <id>2chrome</id>
+            <id>2_chrome</id>
             <properties>
                 <browser>chrome</browser>
                 <browser.config>config/browser.config/chromedriver.config.yaml</browser.config>
@@ -141,14 +142,14 @@
             </activation>
         </profile>
         <profile>
-            <id>3opera</id>
+            <id>3_opera</id>
             <properties>
                 <browser>opera</browser>
                 <browser.config>config/browser.config/opera.config.yaml</browser.config>
             </properties>
         </profile>
         <profile>
-            <id>4edge</id>
+            <id>4_edge</id>
             <properties>
                 <browser>edge</browser>
                 <browser.config>config/browser.config/edge.config.yaml</browser.config>
@@ -159,7 +160,7 @@
 
         <!-- Run Type -->
         <profile>
-            <id>5remote</id>
+            <id>5_remote</id>
             <properties>
                 <remote>true</remote>
                 <hub_url>http://localhost:4444/wd/hub/</hub_url>
@@ -168,19 +169,22 @@
 
         <!-- STAND -->
         <profile>
-            <id>6test</id>
+            <id>6_test</id>
             <properties>
                 <site.url>http://ya.ru/</site.url>
             </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
         </profile>
         <profile>
-            <id>7prod</id>
+            <id>7_prod</id>
             <properties>
                 <site.url>http://yandex.ru/</site.url>
             </properties>
         </profile>
         <profile>
-            <id>8proxy</id>
+            <id>8_proxy</id>
             <properties>
                 <proxy>true</proxy>
                 <proxy_config>proxy.config.yaml</proxy_config>
@@ -217,11 +221,6 @@
             <version>4.2.4</version>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <version>2.9.0</version>
-        </dependency>
-        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.26</version>
@@ -230,6 +229,18 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.26</version>
+        </dependency>
+        <dependency>
+            <groupId>com.consol.citrus</groupId>
+            <artifactId>citrus-http</artifactId>
+            <version>${citrus.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.consol.citrus</groupId>
+            <artifactId>citrus-ws</artifactId>
+            <version>${citrus.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

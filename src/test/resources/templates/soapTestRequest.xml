@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+                   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+>
+    <SOAP-ENV:Body>
+        <mns:Method1Response xmlns:mns="http://www.SoapClient.com/xml/SoapResponder.xsd"
+                             SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+            <bstrReturn xsi:type="xsd:string">Your input parameters are ${Отправитель} and ${Получатель}</bstrReturn>
+        </mns:Method1Response>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
