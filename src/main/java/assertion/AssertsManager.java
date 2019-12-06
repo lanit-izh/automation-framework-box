@@ -14,6 +14,7 @@ public class AssertsManager {
                     AssertsManager assertsManager = new AssertsManager();
                     assertsManager.setAsserts(new ExtendedAssert());
                     assertsManagerThreadLocal.set(assertsManager);
+                    localInstance = assertsManagerThreadLocal.get();
                 }
             }
         }
