@@ -61,11 +61,11 @@ public class CustomRegistryConfigure extends BaseSteps implements TypeRegistryCo
                     public UIElement transform(String[] args) {
                         getSearchContext();
                         if (args.length > 1) {
-                            String[] params = args[2].replace(" ", "").split(",");
+                            String[] params = args[2].trim().split(",");
                             ;
                             if (args[2].isEmpty() || params.length == 0)
                                 throw new FrameworkRuntimeException("не указаны параметры для инициализации элемента '" + args[0] + "'.");
-                            getUIElement(getClassElement(args[0]), params);
+                            return getUIElement(getClassElement(args[0]), params);
                         }
                         return getUIElement(getClassElement(args[0]));
                     }
@@ -83,8 +83,8 @@ public class CustomRegistryConfigure extends BaseSteps implements TypeRegistryCo
         else if (dropDown.contains(arg.toLowerCase().trim())) return DropDown.class;
         else if (link.contains(arg.toLowerCase().trim())) return Link.class;
         else if (radioButton.contains(arg.toLowerCase().trim())) return RadioButton.class;
-        else if (textArea.contains(arg.toLowerCase().trim())) return TextArea.class;
         else if (text.contains(arg.toLowerCase().trim())) return Text.class;
+        else if (textArea.contains(arg.toLowerCase().trim())) return TextArea.class;
         return UIElement.class;
     }
 
