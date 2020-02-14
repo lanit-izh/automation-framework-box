@@ -13,7 +13,7 @@ arguments:
   - --disable-blink-features=BlockCredentialedSubresources
   - --start-maximized
   - --disable-gpu
-  - --useAutomationExtension =false
+  - --useAutomationExtension=false
 
 extensions:
 #- src/test/resources/config/chrome/extensions/Blitz-Smart-Card-Plugin-adapter_v1.1.8.crx
