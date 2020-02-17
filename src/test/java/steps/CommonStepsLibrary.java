@@ -5,6 +5,7 @@ import cucumber.api.java.ru.И;
 import cucumber.api.java.ru.То;
 import cucumber.api.java.ru.Тогда;
 import io.cucumber.datatable.DataTable;
+import io.qameta.atlas.webdriver.AtlasWebElement;
 import org.openqa.selenium.WebDriver;
 import pages.html_elements.Button;
 import pages.html_elements.CheckBox;
@@ -51,9 +52,14 @@ public final class CommonStepsLibrary extends BaseSteps {
         element.click();
     }
 
-    @И("^нажать на кнопку с текстом '(.*)'$")
-    public void clickButtonWithText(String param) {
-        getUIElement(Button.class, param).click();
+    @И("нажать на {type} с текстом {string}")
+    public void clickButtonWithText(Class<? extends UIElement> type, String text) {
+        getUIElement(type, text).click();
+    }
+
+    @И("нажать на {type} {string}")
+    public void clickByName(Class<? extends UIElement> type, String elementName) {
+        getElementByName(elementName, type).click();
     }
 
     @И("^нажать с помощью JS на кнопку с текстом '(.*)'$")
