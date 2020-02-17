@@ -28,8 +28,8 @@ public class Hooks extends BaseSteps {
         log.info("Finish scenario " + scenario.getName());
         String message = "Finish scenario";
         AllureHelper.attachTxt("Txt", message);
-        AllureHelper.attachPageSource(getDriver().getPageSource().getBytes(StandardCharsets.UTF_8));
         if (driverIsActive()) {
+            AllureHelper.attachPageSource(getDriver().getPageSource().getBytes(StandardCharsets.UTF_8));
             AllureHelper.attachScreenShot("Скриншот последней операции", getScreenShooter().takeScreenshot());
             shutdownDriver();
         }
