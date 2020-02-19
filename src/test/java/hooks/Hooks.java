@@ -35,7 +35,7 @@ public class Hooks extends BaseSteps {
         }
         MessageTracingTestListener messageTracingTestListener = (MessageTracingTestListener) getEndpointByName("messageTracingTestListener");
         messageTracingTestListener.onTestFinish(getCitrusRunner().getTestCase());
-        assertsManager.softAssert().assertAll();
-        assertsManager.softAssert().flush();
+        softAssert().assertAll();
+        softAssert().flush();
     }
 }

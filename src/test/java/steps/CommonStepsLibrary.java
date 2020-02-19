@@ -43,7 +43,7 @@ public final class CommonStepsLibrary extends BaseSteps {
     @И("проверить, что тайтл страницы = {string}")
     public void checkPageTitle(String expectedTitle) {
         String actualTitle = getCurrentPage().getWrappedDriver().getTitle();
-        assertsManager.softAssert().assertTrue(expectedTitle.equalsIgnoreCase(actualTitle), "Ожидалось что тайтл страницы '" + expectedTitle + "', фактически:'" + actualTitle + "'");
+        softAssert().assertTrue(expectedTitle.equalsIgnoreCase(actualTitle), "Ожидалось что тайтл страницы '" + expectedTitle + "', фактически:'" + actualTitle + "'");
     }
 
 
@@ -117,7 +117,7 @@ public final class CommonStepsLibrary extends BaseSteps {
     public void checkInputValueEquals(String expectedValue) {
         String actualValue = getUIElement(Input.class).getText();
 
-        assertsManager.softAssert().assertEquals(expectedValue, actualValue, "Текст элемента =" + actualValue
+        softAssert().assertEquals(expectedValue, actualValue, "Текст элемента =" + actualValue
                 + "'. Не совпадает с ожидаемым значением: '" + expectedValue + '\'');
     }
 
@@ -125,7 +125,7 @@ public final class CommonStepsLibrary extends BaseSteps {
     public void checkInputValueEquals(UIElement element, String expectedValue) {
         String actualValue = element.getText();
 
-        assertsManager.softAssert().assertEquals(expectedValue, actualValue, "Текст элемента  = '" + actualValue
+        softAssert().assertEquals(expectedValue, actualValue, "Текст элемента  = '" + actualValue
                 + "'. Не совпадает с ожидаемым значением: '" + expectedValue + '\'');
     }
 
@@ -158,7 +158,7 @@ public final class CommonStepsLibrary extends BaseSteps {
     public void checkCheckboxSelected() {
         CheckBox checkBox = getUIElement(CheckBox.class);
         boolean isSelected = checkBox.isSelected();
-        assertsManager.softAssert().assertTrue(isSelected, "Ожидалось что чекбокс  активирован.");
+        softAssert().assertTrue(isSelected, "Ожидалось что чекбокс  активирован.");
     }
 
 
@@ -166,7 +166,7 @@ public final class CommonStepsLibrary extends BaseSteps {
     public void checkCheckboxNotSelected() {
         CheckBox checkBox = getUIElement(CheckBox.class);
         boolean isSelected = checkBox.isSelected();
-        assertsManager.softAssert().assertFalse(isSelected, "Ожидалось что чекбокс  не активирован.");
+        softAssert().assertFalse(isSelected, "Ожидалось что чекбокс  не активирован.");
     }
 
 
@@ -181,7 +181,7 @@ public final class CommonStepsLibrary extends BaseSteps {
     public void checkRadioButtonSelected() {
         RadioButton radioButton = getUIElement(RadioButton.class);
         boolean isSelected = radioButton.isSelected();
-        assertsManager.softAssert().assertTrue(isSelected, "Ожидалось что радиокнопка  выбрана.");
+        softAssert().assertTrue(isSelected, "Ожидалось что радиокнопка  выбрана.");
     }
 
 
@@ -189,7 +189,7 @@ public final class CommonStepsLibrary extends BaseSteps {
     public void checkRadioButtonNotSelected() {
         RadioButton radioButton = getUIElement(RadioButton.class);
         boolean isSelected = radioButton.isSelected();
-        assertsManager.softAssert().assertFalse(isSelected, "Ожидалось что радиокнопка  не выбрана.");
+        softAssert().assertFalse(isSelected, "Ожидалось что радиокнопка  не выбрана.");
     }
 
     /**
@@ -205,7 +205,7 @@ public final class CommonStepsLibrary extends BaseSteps {
     @Тогда("текущий блок содержит текст {string}")
     public void assertBlockHasText(String expectedText) {
         String actualText = getCurrentBlock().getText();
-        assertsManager.softAssert().assertTrue(actualText.toLowerCase().contains(expectedText.toLowerCase()), "Текст в блоке '" + actualText + "'. Не содержит текст: '" + expectedText + "'");
+        softAssert().assertTrue(actualText.toLowerCase().contains(expectedText.toLowerCase()), "Текст в блоке '" + actualText + "'. Не содержит текст: '" + expectedText + "'");
     }
 
 
@@ -217,7 +217,7 @@ public final class CommonStepsLibrary extends BaseSteps {
     @Тогда("проверить что адрес ссылки  = {string}")
     public void checkLinkAddress(String expectedLinkAddress) {
         String actualLinkAddress = ((Link) getUIElement(Link.class)).getLinkAddress();
-        assertsManager.softAssert().assertEquals(expectedLinkAddress, actualLinkAddress, "Адрес ссылки '" + actualLinkAddress + "'. Не совпадает с ожидаемым значением: '" + expectedLinkAddress + "'");
+        softAssert().assertEquals(expectedLinkAddress, actualLinkAddress, "Адрес ссылки '" + actualLinkAddress + "'. Не совпадает с ожидаемым значением: '" + expectedLinkAddress + "'");
     }
 
     @И("в выпадающем списке  выбрать значение {string}")
@@ -243,30 +243,30 @@ public final class CommonStepsLibrary extends BaseSteps {
     @Тогда("в выпадающем списке  выбрано {string}")
     public void checkThatValueInDropdownChosen(String expectedValue) {
         String actualValue = ((DropDown) getUIElement(DropDown.class)).getSelectedInDropdownValue();
-        assertsManager.softAssert().assertEquals(expectedValue, actualValue, "Выбранное в элементе  значение '" + actualValue + "'  не соответствует ожидаемому значению '" + expectedValue + "'");
+        softAssert().assertEquals(expectedValue, actualValue, "Выбранное в элементе  значение '" + actualValue + "'  не соответствует ожидаемому значению '" + expectedValue + "'");
     }
 
 
     @То("элемент {element} отображен")
     public void checkIsDisplayed(UIElement element) {
-        assertsManager.softAssert().assertTrue(element.isDisplayed(), "Элемент '" + element.getClass().getInterfaces()[0] + "'  не отображён");
+        softAssert().assertTrue(element.isDisplayed(), "Элемент '" + element.getClass().getInterfaces()[0] + "'  не отображён");
     }
 
     @То("элемент {element} не отображается")
     public void checkNotDisplayed(UIElement element) {
-        assertsManager.softAssert().assertFalse(element.isDisplayed(), "Элемент '" + element.getClass().getInterfaces()[0] + "'  не должен отображаться");
+        softAssert().assertFalse(element.isDisplayed(), "Элемент '" + element.getClass().getInterfaces()[0] + "'  не должен отображаться");
     }
 
 
     @То("элемент {element} доступен")
     public void checkIsEnabled(UIElement element) {
-        assertsManager.softAssert().assertTrue(element.isEnabled(), "Элемент '" + element.getClass().getInterfaces()[0] + "' заблокирован на странице");
+        softAssert().assertTrue(element.isEnabled(), "Элемент '" + element.getClass().getInterfaces()[0] + "' заблокирован на странице");
     }
 
 
     @То("элемент {element} заблокирован")
     public void isDisabled(UIElement element) {
-        assertsManager.softAssert().assertFalse(element.isEnabled(), "Элемент '" + element.getClass().getInterfaces()[0] + "' не заблокирован на странице");
+        softAssert().assertFalse(element.isEnabled(), "Элемент '" + element.getClass().getInterfaces()[0] + "' не заблокирован на странице");
     }
 
     @И("подождать, когда элемент {element} станет видимым")
@@ -286,7 +286,7 @@ public final class CommonStepsLibrary extends BaseSteps {
 
     @И("элемент {element} присутствует на странице")
     public void checkElementWithText(UIElement element) {
-        assertsManager.softAssert().assertTrue(element.isDisplayed(), "Элемент с текстом '" + element.getClass().getInterfaces()[0] + "'отсутствует");
+        softAssert().assertTrue(element.isDisplayed(), "Элемент с текстом '" + element.getClass().getInterfaces()[0] + "'отсутствует");
     }
 
 

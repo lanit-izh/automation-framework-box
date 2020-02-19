@@ -79,6 +79,6 @@ public class ApiSteps extends BaseSteps {
 
     @И("проверить что существует сообщение с именем {string}")
     public void checkMessageExist(String messageName) {
-        assertsManager.softAssert().assertTrue(getMessageByName(messageName) != null, "Сообщение с именем:" + messageName + ", отсуствует");
+        softAssert().assertTrue(getMessageByName(messageName) != null, "Сообщение с именем:" + messageName + ", отсуствует");
     }
 }
