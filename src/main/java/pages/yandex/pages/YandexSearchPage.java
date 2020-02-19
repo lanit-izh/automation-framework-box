@@ -8,7 +8,7 @@ import ru.lanit.at.pages.AbstractPage;
 import ru.lanit.at.pages.annotations.Title;
 import ru.lanit.at.pages.annotations.WithName;
 
-@Title(value = "Поиск яндекс")
+@Title("Поиск яндекс")
 public interface YandexSearchPage extends AbstractPage,
         SearchPageBlock.WithSearchPageBlock, Text.WithText {
 

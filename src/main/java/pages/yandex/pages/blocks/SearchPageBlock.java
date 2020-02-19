@@ -7,7 +7,7 @@ import ru.lanit.at.pages.annotations.Title;
 import ru.lanit.at.pages.annotations.WithName;
 import ru.lanit.at.pages.block.AbstractBlockElement;
 
-@Title(value = "Блок поиска")
+@Title("Блок поиска")
 public interface SearchPageBlock extends AbstractBlockElement,
         Input.WithInput, Button.WithButton {
 

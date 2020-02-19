@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 
-@Title(value = "Поле ввода")
+@Title("Поле ввода")
 public interface Input extends UIElement {
 
 
@@ -23,7 +23,7 @@ public interface Input extends UIElement {
         sendKeys(localDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
     }
 
-    public interface WithInput extends UIElement {
+    interface WithInput extends UIElement {
         @FindBy(".//input")
         ElementsCollection<Input> inputs();
 

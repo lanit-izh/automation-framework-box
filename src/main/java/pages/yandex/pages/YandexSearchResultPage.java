@@ -4,7 +4,7 @@ import pages.yandex.pages.blocks.SearchResultBlock;
 import ru.lanit.at.pages.AbstractPage;
 import ru.lanit.at.pages.annotations.Title;
 
-@Title(value = "Результаты поиска")
+@Title("Результаты поиска")
 public interface YandexSearchResultPage extends AbstractPage,
         SearchResultBlock.WithSearchResultBlock {
 }

@@ -4,7 +4,7 @@ import io.qameta.atlas.webdriver.extension.FindBy;
 import ru.lanit.at.pages.annotations.Title;
 import ru.lanit.at.pages.element.UIElement;
 
-@Title(value = "Ссылка")
+@Title("Ссылка")
 public interface Link extends UIElement {
 
 
@@ -13,7 +13,7 @@ public interface Link extends UIElement {
     }
 
 
-    public interface WithLink extends UIElement {
+    interface WithLink extends UIElement {
         @FindBy(".//a")
         Link link();
     }

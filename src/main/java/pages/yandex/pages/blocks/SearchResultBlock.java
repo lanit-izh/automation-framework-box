@@ -7,7 +7,7 @@ import pages.html_elements.Text;
 import ru.lanit.at.pages.annotations.Title;
 import ru.lanit.at.pages.block.AbstractBlockElement;
 
-@Title(value = "Результат поисковой выдачи")
+@Title("Результат поисковой выдачи")
 public interface SearchResultBlock extends AbstractBlockElement,
         Link.WithLink, Text.WithText {
     interface WithSearchResultBlock extends AbstractBlockElement {
