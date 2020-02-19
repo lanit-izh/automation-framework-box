@@ -131,7 +131,6 @@ public class CustomRegistryConfigure extends BaseSteps implements TypeRegistryCo
             result = Period.ofYears(count);
         }
         return result;
-
     }
 
 }

@@ -1,20 +1,16 @@
 package steps;
 
 
+import cucumber.api.java.ru.Если;
 import cucumber.api.java.ru.И;
 import cucumber.api.java.ru.То;
 import cucumber.api.java.ru.Тогда;
 import io.cucumber.datatable.DataTable;
 import io.qameta.atlas.webdriver.AtlasWebElement;
 import org.openqa.selenium.WebDriver;
-import pages.html_elements.Button;
-import pages.html_elements.CheckBox;
-import pages.html_elements.DropDown;
-import pages.html_elements.Input;
-import pages.html_elements.Link;
-import pages.html_elements.RadioButton;
-import pages.html_elements.Text;
+import pages.html_elements.*;
 import ru.lanit.at.exceptions.FrameworkRuntimeException;
+import ru.lanit.at.pages.AbstractPage;
 import ru.lanit.at.pages.element.UIElement;
 import ru.yandex.qatools.matchers.webdriver.EnabledMatcher;
 
@@ -373,5 +369,35 @@ public final class CommonStepsLibrary extends BaseSteps {
     }
 
 
+    @И("нажать {type} {string}")
+    public void clickElementByName(Class<? extends AtlasWebElement> type, String name) {
+        getElementByName(name, type).click();
+    }
+
+    @Тогда("открыта страница {string}")
+    public void isPageOpen(String pageTitle) {
+        resetCurrentBlock();
+        AbstractPage page = getPageByTitle(pageTitle);
+        softAssert().assertTrue(page.isOpen(), "Страница '" + pageTitle + "' не открыта");
+
+    }
+
+    @Если("в {type} {string} ввести {string}")
+    public void sendKeysToElement(Class<? extends AtlasWebElement> type, String elementName, String args) {
+        getElementByName(elementName, type).sendKeys(args);
+    }
+
+    // todo "соответствует" переделать в тип "вид сравнения", чтобы можно было использовать
+    //  сравнения "содержит, не содержит, не соответствует/не равно" и т.п.
+    @Тогда("в поле {string} значение соответствует {string}")
+    public void checkElementTextMatch(String elementName, String expectedValue) {
+        String actualText = getElementByName(elementName, UIElement.class).getText();
+        softAssert().assertEquals(actualText, expectedValue);
+    }
+
+    @Если("в {string} ввести {string}")
+    public void вВвести(String elementName, String value) {
+        getElementByName(elementName, AtlasWebElement.class).sendKeys(value);
+    }
 }
 
