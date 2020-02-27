@@ -29,8 +29,10 @@ public class Hooks extends BaseSteps {
         String message = "Finish scenario";
         AllureHelper.attachTxt("Txt", message);
         if (driverIsActive()) {
-            AllureHelper.attachPageSource(getDriver().getPageSource().getBytes(StandardCharsets.UTF_8));
-            AllureHelper.attachScreenShot("Скриншот последней операции", getScreenShooter().takeScreenshot());
+            try {
+                AllureHelper.attachPageSource(getDriver().getPageSource().getBytes(StandardCharsets.UTF_8));
+                AllureHelper.attachScreenShot("Скриншот последней операции", getScreenShooter().takeScreenshot());
+            }catch (Exception ignore){}
             shutdownDriver();
         }
         MessageTracingTestListener messageTracingTestListener = (MessageTracingTestListener) getEndpointByName("messageTracingTestListener");
