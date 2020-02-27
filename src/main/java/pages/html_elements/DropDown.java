@@ -4,7 +4,7 @@ import io.qameta.atlas.webdriver.extension.FindBy;
 import ru.lanit.at.pages.annotations.Title;
 import ru.lanit.at.pages.element.UIElement;
 
-@Title(value = "ДропДаун")
+@Title("ДропДаун")
 public interface DropDown extends UIElement {
 
 
@@ -26,7 +26,7 @@ public interface DropDown extends UIElement {
     }
 
 
-    public interface WithDropDown extends UIElement {
+    interface WithDropDown extends UIElement {
         @FindBy(".//select")
         DropDown dropDown();
     }

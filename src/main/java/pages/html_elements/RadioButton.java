@@ -4,7 +4,7 @@ import io.qameta.atlas.webdriver.extension.FindBy;
 import ru.lanit.at.pages.annotations.Title;
 import ru.lanit.at.pages.element.UIElement;
 
-@Title(value = "РадиоКнопка")
+@Title("РадиоКнопка")
 public interface RadioButton extends UIElement {
 
 
@@ -13,7 +13,7 @@ public interface RadioButton extends UIElement {
     }
 
 
-    public interface WithRadioButton extends UIElement {
+    interface WithRadioButton extends UIElement {
         @FindBy(".//input[@type='radio']")
         RadioButton radioButton();
     }

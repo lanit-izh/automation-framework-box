@@ -6,15 +6,15 @@ import ru.lanit.at.pages.annotations.Title;
 import ru.lanit.at.pages.element.UIElement;
 
 
-@Title(value = "Кнопка")
+@Title("Кнопка")
 public interface Button extends UIElement, Text.WithText {
 
 
-    public interface WithButton extends UIElement {
+    interface WithButton extends UIElement {
         @FindBy(".//button")
         Button button();
 
-        @FindBy(".//text()[normalize-space(.) ='{{ name }}']/ancestor::*[self::button][1]|.//*[contains(@class,'button')and contains(text(),'{{ name }}')]")
+        @FindBy(".//text()[normalize-space(.) ='Поиск в Google']/ancestor::*[self::button][1]|.//*[contains(@class,'button')and contains(text(),'Поиск в Google')]")
         Button button(@Param("name") String name);
     }
 }

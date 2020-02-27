@@ -1,19 +1,16 @@
 package steps;
 
 
+import cucumber.api.java.ru.Если;
 import cucumber.api.java.ru.И;
 import cucumber.api.java.ru.То;
 import cucumber.api.java.ru.Тогда;
 import io.cucumber.datatable.DataTable;
+import io.qameta.atlas.webdriver.AtlasWebElement;
 import org.openqa.selenium.WebDriver;
-import pages.html_elements.Button;
-import pages.html_elements.CheckBox;
-import pages.html_elements.DropDown;
-import pages.html_elements.Input;
-import pages.html_elements.Link;
-import pages.html_elements.RadioButton;
-import pages.html_elements.Text;
+import pages.html_elements.*;
 import ru.lanit.at.exceptions.FrameworkRuntimeException;
+import ru.lanit.at.pages.AbstractPage;
 import ru.lanit.at.pages.element.UIElement;
 import ru.yandex.qatools.matchers.webdriver.EnabledMatcher;
 
@@ -42,7 +39,7 @@ public final class CommonStepsLibrary extends BaseSteps {
     @И("проверить, что тайтл страницы = {string}")
     public void checkPageTitle(String expectedTitle) {
         String actualTitle = getCurrentPage().getWrappedDriver().getTitle();
-        assertsManager.softAssert().assertTrue(expectedTitle.equalsIgnoreCase(actualTitle), "Ожидалось что тайтл страницы '" + expectedTitle + "', фактически:'" + actualTitle + "'");
+        softAssert().assertTrue(expectedTitle.equalsIgnoreCase(actualTitle), "Ожидалось что тайтл страницы '" + expectedTitle + "', фактически:'" + actualTitle + "'");
     }
 
 
@@ -51,9 +48,14 @@ public final class CommonStepsLibrary extends BaseSteps {
         element.click();
     }
 
-    @И("^нажать на кнопку с текстом '(.*)'$")
-    public void clickButtonWithText(String param) {
-        getUIElement(Button.class, param).click();
+    @И("нажать на {type} с текстом {string}")
+    public void clickButtonWithText(Class<? extends UIElement> type, String text) {
+        getUIElement(type, text).click();
+    }
+
+    @И("нажать на {type} {string}")
+    public void clickByName(Class<? extends UIElement> type, String elementName) {
+        getElementByName(elementName, type).click();
     }
 
     @И("^нажать с помощью JS на кнопку с текстом '(.*)'$")
@@ -77,11 +79,19 @@ public final class CommonStepsLibrary extends BaseSteps {
         }
     }
 
+    /**
+     * @deprecated предлагаю удалить и не использовать этот и подобные методы, так как они создают дополнительный
+     * слой абстракции который сложно понимать и поддерживать
+     */
     @И("выполнить действие {string}")
     public void executeMethod(String methodName) {
         executeMethodByName(getSearchContext(), methodName);
     }
 
+    /**
+     * @deprecated предлагаю удалить и не использовать этот и подобные методы, так как они создают дополнительный
+     * слой абстракции который сложно понимать и поддерживать
+     */
     @И("выполнить действие {string}, c аргументами {string}")
     public void executeMethod(String methodName, String arg) {
         executeMethodByName(getSearchContext(), methodName, arg);
@@ -103,7 +113,7 @@ public final class CommonStepsLibrary extends BaseSteps {
     public void checkInputValueEquals(String expectedValue) {
         String actualValue = getUIElement(Input.class).getText();
 
-        assertsManager.softAssert().assertEquals(expectedValue, actualValue, "Текст элемента =" + actualValue
+        softAssert().assertEquals(expectedValue, actualValue, "Текст элемента =" + actualValue
                 + "'. Не совпадает с ожидаемым значением: '" + expectedValue + '\'');
     }
 
@@ -111,7 +121,7 @@ public final class CommonStepsLibrary extends BaseSteps {
     public void checkInputValueEquals(UIElement element, String expectedValue) {
         String actualValue = element.getText();
 
-        assertsManager.softAssert().assertEquals(expectedValue, actualValue, "Текст элемента  = '" + actualValue
+        softAssert().assertEquals(expectedValue, actualValue, "Текст элемента  = '" + actualValue
                 + "'. Не совпадает с ожидаемым значением: '" + expectedValue + '\'');
     }
 
@@ -144,7 +154,7 @@ public final class CommonStepsLibrary extends BaseSteps {
     public void checkCheckboxSelected() {
         CheckBox checkBox = getUIElement(CheckBox.class);
         boolean isSelected = checkBox.isSelected();
-        assertsManager.softAssert().assertTrue(isSelected, "Ожидалось что чекбокс  активирован.");
+        softAssert().assertTrue(isSelected, "Ожидалось что чекбокс  активирован.");
     }
 
 
@@ -152,7 +162,7 @@ public final class CommonStepsLibrary extends BaseSteps {
     public void checkCheckboxNotSelected() {
         CheckBox checkBox = getUIElement(CheckBox.class);
         boolean isSelected = checkBox.isSelected();
-        assertsManager.softAssert().assertFalse(isSelected, "Ожидалось что чекбокс  не активирован.");
+        softAssert().assertFalse(isSelected, "Ожидалось что чекбокс  не активирован.");
     }
 
 
@@ -167,7 +177,7 @@ public final class CommonStepsLibrary extends BaseSteps {
     public void checkRadioButtonSelected() {
         RadioButton radioButton = getUIElement(RadioButton.class);
         boolean isSelected = radioButton.isSelected();
-        assertsManager.softAssert().assertTrue(isSelected, "Ожидалось что радиокнопка  выбрана.");
+        softAssert().assertTrue(isSelected, "Ожидалось что радиокнопка  выбрана.");
     }
 
 
@@ -175,7 +185,7 @@ public final class CommonStepsLibrary extends BaseSteps {
     public void checkRadioButtonNotSelected() {
         RadioButton radioButton = getUIElement(RadioButton.class);
         boolean isSelected = radioButton.isSelected();
-        assertsManager.softAssert().assertFalse(isSelected, "Ожидалось что радиокнопка  не выбрана.");
+        softAssert().assertFalse(isSelected, "Ожидалось что радиокнопка  не выбрана.");
     }
 
     /**
@@ -191,7 +201,7 @@ public final class CommonStepsLibrary extends BaseSteps {
     @Тогда("текущий блок содержит текст {string}")
     public void assertBlockHasText(String expectedText) {
         String actualText = getCurrentBlock().getText();
-        assertsManager.softAssert().assertTrue(actualText.toLowerCase().contains(expectedText.toLowerCase()), "Текст в блоке '" + actualText + "'. Не содержит текст: '" + expectedText + "'");
+        softAssert().assertTrue(actualText.toLowerCase().contains(expectedText.toLowerCase()), "Текст в блоке '" + actualText + "'. Не содержит текст: '" + expectedText + "'");
     }
 
 
@@ -203,7 +213,7 @@ public final class CommonStepsLibrary extends BaseSteps {
     @Тогда("проверить что адрес ссылки  = {string}")
     public void checkLinkAddress(String expectedLinkAddress) {
         String actualLinkAddress = ((Link) getUIElement(Link.class)).getLinkAddress();
-        assertsManager.softAssert().assertEquals(expectedLinkAddress, actualLinkAddress, "Адрес ссылки '" + actualLinkAddress + "'. Не совпадает с ожидаемым значением: '" + expectedLinkAddress + "'");
+        softAssert().assertEquals(expectedLinkAddress, actualLinkAddress, "Адрес ссылки '" + actualLinkAddress + "'. Не совпадает с ожидаемым значением: '" + expectedLinkAddress + "'");
     }
 
     @И("в выпадающем списке  выбрать значение {string}")
@@ -229,30 +239,30 @@ public final class CommonStepsLibrary extends BaseSteps {
     @Тогда("в выпадающем списке  выбрано {string}")
     public void checkThatValueInDropdownChosen(String expectedValue) {
         String actualValue = ((DropDown) getUIElement(DropDown.class)).getSelectedInDropdownValue();
-        assertsManager.softAssert().assertEquals(expectedValue, actualValue, "Выбранное в элементе  значение '" + actualValue + "'  не соответствует ожидаемому значению '" + expectedValue + "'");
+        softAssert().assertEquals(expectedValue, actualValue, "Выбранное в элементе  значение '" + actualValue + "'  не соответствует ожидаемому значению '" + expectedValue + "'");
     }
 
 
     @То("элемент {element} отображен")
     public void checkIsDisplayed(UIElement element) {
-        assertsManager.softAssert().assertTrue(element.isDisplayed(), "Элемент '" + element.getClass().getInterfaces()[0] + "'  не отображён");
+        softAssert().assertTrue(element.isDisplayed(), "Элемент '" + element.getClass().getInterfaces()[0] + "'  не отображён");
     }
 
     @То("элемент {element} не отображается")
     public void checkNotDisplayed(UIElement element) {
-        assertsManager.softAssert().assertFalse(element.isDisplayed(), "Элемент '" + element.getClass().getInterfaces()[0] + "'  не должен отображаться");
+        softAssert().assertFalse(element.isDisplayed(), "Элемент '" + element.getClass().getInterfaces()[0] + "'  не должен отображаться");
     }
 
 
     @То("элемент {element} доступен")
     public void checkIsEnabled(UIElement element) {
-        assertsManager.softAssert().assertTrue(element.isEnabled(), "Элемент '" + element.getClass().getInterfaces()[0] + "' заблокирован на странице");
+        softAssert().assertTrue(element.isEnabled(), "Элемент '" + element.getClass().getInterfaces()[0] + "' заблокирован на странице");
     }
 
 
     @То("элемент {element} заблокирован")
     public void isDisabled(UIElement element) {
-        assertsManager.softAssert().assertFalse(element.isEnabled(), "Элемент '" + element.getClass().getInterfaces()[0] + "' не заблокирован на странице");
+        softAssert().assertFalse(element.isEnabled(), "Элемент '" + element.getClass().getInterfaces()[0] + "' не заблокирован на странице");
     }
 
     @И("подождать, когда элемент {element} станет видимым")
@@ -272,7 +282,7 @@ public final class CommonStepsLibrary extends BaseSteps {
 
     @И("элемент {element} присутствует на странице")
     public void checkElementWithText(UIElement element) {
-        assertsManager.softAssert().assertTrue(element.isDisplayed(), "Элемент с текстом '" + element.getClass().getInterfaces()[0] + "'отсутствует");
+        softAssert().assertTrue(element.isDisplayed(), "Элемент с текстом '" + element.getClass().getInterfaces()[0] + "'отсутствует");
     }
 
 
@@ -359,5 +369,35 @@ public final class CommonStepsLibrary extends BaseSteps {
     }
 
 
+    @И("нажать {type} {string}")
+    public void clickElementByName(Class<? extends AtlasWebElement> type, String name) {
+        getElementByName(name, type).click();
+    }
+
+    @Тогда("открыта страница {string}")
+    public void isPageOpen(String pageTitle) {
+        resetCurrentBlock();
+        AbstractPage page = getPageByTitle(pageTitle);
+        softAssert().assertTrue(page.isOpen(), "Страница '" + pageTitle + "' не открыта");
+
+    }
+
+    @Если("в {type} {string} ввести {string}")
+    public void sendKeysToElement(Class<? extends AtlasWebElement> type, String elementName, String args) {
+        getElementByName(elementName, type).sendKeys(args);
+    }
+
+    // todo "соответствует" переделать в тип "вид сравнения", чтобы можно было использовать
+    //  сравнения "содержит, не содержит, не соответствует/не равно" и т.п.
+    @Тогда("в поле {string} значение соответствует {string}")
+    public void checkElementTextMatch(String elementName, String expectedValue) {
+        String actualText = getElementByName(elementName, UIElement.class).getText();
+        softAssert().assertEquals(actualText, expectedValue);
+    }
+
+    @Если("в {string} ввести {string}")
+    public void вВвести(String elementName, String value) {
+        getElementByName(elementName, AtlasWebElement.class).sendKeys(value);
+    }
 }
 

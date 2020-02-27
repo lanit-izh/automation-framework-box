@@ -4,7 +4,7 @@ import io.qameta.atlas.webdriver.extension.FindBy;
 import ru.lanit.at.pages.annotations.Title;
 import ru.lanit.at.pages.element.UIElement;
 
-@Title(value = "Чекбокс")
+@Title("Чекбокс")
 public interface CheckBox extends UIElement {
 
 
@@ -25,7 +25,7 @@ public interface CheckBox extends UIElement {
     }
 
 
-    public interface WithCheckBox extends UIElement {
+    interface WithCheckBox extends UIElement {
         @FindBy(".//input[@type='checkbox']")
         CheckBox checkBox();
     }

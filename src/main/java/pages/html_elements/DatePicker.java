@@ -7,7 +7,7 @@ import ru.lanit.at.pages.element.UIElement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-@Title(value = "Выбор даты")
+@Title("Выбор даты")
 public interface DatePicker extends UIElement {
     DateTimeFormatter FORMAT_DD_MM_YYYY = DateTimeFormatter.ofPattern("dd.MM.yyyy");
     DateTimeFormatter MM_YYYY = DateTimeFormatter.ofPattern("MM.yyyy");
@@ -32,7 +32,7 @@ public interface DatePicker extends UIElement {
     }
 
 
-    public interface WithDataPicker extends UIElement {
+    interface WithDataPicker extends UIElement {
         @FindBy(".//*[contains(@class,'datepicker')]")
         DatePicker datapicker();
     }

@@ -43,6 +43,13 @@ public class CustomRegistryConfigure extends BaseSteps implements TypeRegistryCo
     public void configureTypeRegistry(TypeRegistry typeRegistry) {
         registerLocalDate(typeRegistry);
         registerUIElement(typeRegistry);
+        typeRegistry.defineParameterType(new ParameterType<>(
+                "type",
+                "(" + button + "|" + checkBox + "|" + datePicker + "|" + dropDown + "|" + input + "|"
+                        + link + "|" + radioButton + "|" + textArea + "|" + text + ")",
+                Class.class,
+                this::getClassElement
+        ));
     }
 
 
@@ -124,7 +131,6 @@ public class CustomRegistryConfigure extends BaseSteps implements TypeRegistryCo
             result = Period.ofYears(count);
         }
         return result;
-
     }
 
 }
