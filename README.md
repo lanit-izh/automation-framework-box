@@ -1,5 +1,5 @@
 # Banjo (Lanit AT framework-box) 
-[![license](https://img.shields.io/github/license/lanit-izh/automation-framework-box)]
+![license](https://img.shields.io/github/license/lanit-izh/automation-framework-box) ![version](https://img.shields.io/badge/version-4.0.9-green) ![snapshot](https://img.shields.io/badge/snapshot-4.0.10-blue)
 
 ## Общая информация
 Образцовая реализация [Banjo Core](https://github.com/lanit-izh/automation-framework-core) с использованием TestNG, Cucumber и Yandex Allure. Подробная инструкция по установке и использованию содержится в [wiki проекта](https://github.com/lanit-izh/automation-framework-box/wiki)
