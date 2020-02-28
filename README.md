@@ -1,7 +1,8 @@
-# Пример имплементации [LanitAT-framework](https://github.com/lanit-izh/automation-framework-core)
+# Banjo (Lanit AT framework-box) 
+[![license](https://img.shields.io/github/license/lanit-izh/automation-framework-box)]
+
 ## Общая информация
-Фреймворк не является конечным продуктом, а лишь вариантом использования [LanitAT-framework](https://github.com/lanit-izh/automation-framework-core). Полная документация об использовании этой структуры в [wiki](https://github.com/lanit-izh/automation-framework-box/wiki). 
-Данное руководство является кратким изложением структуры.
+Образцовая реализация [Banjo Core](https://github.com/lanit-izh/automation-framework-core) с использованием TestNG, Cucumber и Yandex Allure. Подробная инструкция по установке и использованию содержится в [wiki проекта](https://github.com/lanit-izh/automation-framework-box/wiki)
 Большая часть структуры обусловлена использованием фреймворка [Atlas](https://github.com/qameta/atlas), а так же нашим собственным опытом в имплементации подхода BDD и в частности фреймворка [Cucucmber](https://github.com/cucumber/cucumber)
 ### pages
 В пакете `main/pages` раполагаются интерфейсы, являющиеся абстрактным представлением тестируемых web-страниц. В них описываются явно в виде методов с аннотацией @FindBy элементы страницы по принципу классического PageObject. Этот паттерн дополнен подходом из Atlas: типичные, часто используемые элементы с тривиальными локаторами, подключатся в виде наследования интерфейса, предоставляющего метод с уже прописанными относительными локаторами.
