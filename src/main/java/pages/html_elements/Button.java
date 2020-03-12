@@ -14,7 +14,8 @@ public interface Button extends UIElement, Text.WithText {
         @FindBy(".//button")
         Button button();
 
-        @FindBy(".//text()[normalize-space(.) ='Поиск в Google']/ancestor::*[self::button][1]|.//*[contains(@class,'button')and contains(text(),'Поиск в Google')]")
+        @FindBy(".//text()[normalize-space(.) ='{{ name }}']/ancestor::*[self::button][1]|.//*[contains(@class,'button')and contains(text(),'{{ name }}')]")
         Button button(@Param("name") String name);
+
     }
 }
