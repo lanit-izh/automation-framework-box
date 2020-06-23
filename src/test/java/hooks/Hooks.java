@@ -7,10 +7,13 @@ import cucumber.api.java.Before;
 import extensions.ElementReadyClickSendKeysExtension;
 import extensions.IsDisplayedExtension;
 import io.qameta.atlas.core.Atlas;
+import ru.lanit.at.context.Context;
 import steps.BaseSteps;
 import utils.AllureHelper;
+import utils.DataProviderHelper;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 
 public class Hooks extends BaseSteps {
@@ -21,10 +24,23 @@ public class Hooks extends BaseSteps {
         Atlas atlas = getAtlas();
         atlas.extension(new ElementReadyClickSendKeysExtension());
         atlas.extension(new IsDisplayedExtension());
+        getDpData();
+    }
+
+    private void getDpData() {
+        String alias_input = System.getProperty("alias_input");
+        if (alias_input != null) {
+            if (!alias_input.isEmpty()) {
+                log.info("Получение данные по алиасу '" + alias_input + "'.");
+                Map<String, Object> dataKeeper = (Map<String, Object>) Context.getInstance().getBean("dataKeeper");
+                dataKeeper.putAll(DataProviderHelper.getDpData(alias_input));
+            }
+        }
     }
 
     @After
     public void tearDown(Scenario scenario) {
+        saveDpData();
         log.info("Finish scenario " + scenario.getName());
         String message = "Finish scenario";
         AllureHelper.attachTxt("Txt", message);
@@ -39,5 +55,25 @@ public class Hooks extends BaseSteps {
         messageTracingTestListener.onTestFinish(getCitrusRunner().getTestCase());
         softAssert().assertAll();
         softAssert().flush();
+    }
+
+    private void saveDpData() {
+        String alias_output = System.getProperty("alias_output");
+        if (alias_output != null) {
+            if (!alias_output.isEmpty()) {
+                Map<String, Object> data = (Map<String, Object>) Context.getInstance().getBean("dataKeeper");
+//                data.remove(EXPECTED);
+//                data.remove(ACTUAL);
+//                data.remove(USER);
+//                data.remove(CURRENT_BLOCK);
+//                data.remove(CURRENT_BLOCK_NAME);
+//                data.remove(CURRENT_SUBBLOCK_NAME);
+//                data.remove(FILE_ATTACHED_STATUS);
+//                data.remove("current.stand");
+//                data.remove("LASTURL");
+                log.info("Сохранения по алиасу '" + alias_output + "' данных");
+                DataProviderHelper.saveDpData(alias_output, data);
+            }
+        }
     }
 }

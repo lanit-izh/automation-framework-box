@@ -13,6 +13,7 @@ import ru.lanit.at.exceptions.FrameworkRuntimeException;
 import ru.lanit.at.pages.AbstractPage;
 import ru.lanit.at.pages.element.UIElement;
 import ru.yandex.qatools.matchers.webdriver.EnabledMatcher;
+import utils.DataGenerator;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -100,7 +101,7 @@ public final class CommonStepsLibrary extends BaseSteps {
 
     @И("ввести в поле ввода значение {string}")
     public void typeIntoInput(String text) {
-        getUIElement(Input.class).sendKeys(text);
+        getUIElement(Input.class).sendKeys(DataGenerator.replaceAllGeneratingValues(text));
     }
 
     @И("ввести в поле ввода дату {date}")
@@ -112,6 +113,7 @@ public final class CommonStepsLibrary extends BaseSteps {
     @Тогда("проверить, что в поле значение = {string}")
     public void checkInputValueEquals(String expectedValue) {
         String actualValue = getUIElement(Input.class).getText();
+        expectedValue = DataGenerator.replaceAllGeneratingValues(expectedValue);
 
         softAssert().assertEquals(expectedValue, actualValue, "Текст элемента =" + actualValue
                 + "'. Не совпадает с ожидаемым значением: '" + expectedValue + '\'');

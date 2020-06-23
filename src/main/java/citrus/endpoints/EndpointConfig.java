@@ -1,5 +1,4 @@
-
-package api;
+package citrus.endpoints;
 
 import com.consol.citrus.TestCase;
 import com.consol.citrus.context.TestContext;
@@ -22,6 +21,15 @@ public class EndpointConfig {
                 .http()
                 .client()
                 .requestUrl("https://foaas.com/")
+                .build();
+    }
+
+    @Bean(name = "dataprovider")
+    public HttpClient dataprovider() {
+        return CitrusEndpoints
+                .http()
+                .client()
+                .requestUrl(System.getProperty("dp","http://10.19.87.79:13001"))
                 .build();
     }
 
@@ -71,3 +79,4 @@ public class EndpointConfig {
         }
     }
 }
+
