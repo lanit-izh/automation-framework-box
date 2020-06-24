@@ -29,7 +29,7 @@ public class EndpointConfig {
         return CitrusEndpoints
                 .http()
                 .client()
-                .requestUrl(System.getProperty("dp","http://192.168.0.101:3000"))
+                .requestUrl(System.getProperty("dp","http://10.19.87.79:13001"))
                 .build();
     }
 
