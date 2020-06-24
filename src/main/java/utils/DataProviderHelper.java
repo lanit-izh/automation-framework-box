@@ -1,11 +1,13 @@
 package utils;
 
 
+import com.consol.citrus.exceptions.TestCaseFailedException;
 import com.consol.citrus.http.client.HttpClient;
 import com.consol.citrus.message.MessageType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.jayway.jsonpath.PathNotFoundException;
 import org.springframework.http.HttpStatus;
 import ru.lanit.at.citrus.CitrusRunner;
 import ru.lanit.at.context.Context;
@@ -30,13 +32,11 @@ public class DataProviderHelper {
                 .header("Accept-Charset", "utf-8")
                 .accept("application/json"));
 
-
         citrusRunner.http(httpActionBuilder -> httpActionBuilder
                 .client(e2e)
                 .receive()
                 .response(HttpStatus.OK)
                 .messageType(MessageType.JSON).extractFromPayload("$.[0].value", "alias.value"));
-
         try {
             return new ObjectMapper().readValue(citrusRunner.getTestContext().getVariable("alias.value", String.class), HashMap.class);
         } catch (IOException e) {
