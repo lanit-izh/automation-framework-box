@@ -1,3 +1,3 @@
 #!/bin/bash
-cd ais_mfc/
-mvn spring-boot:run
+cd automation_framework_box/
+mvn test -Dtest=Application

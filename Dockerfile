@@ -13,11 +13,10 @@ RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
 ENV MAVEN_HOME /usr/share/maven
 ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 
-COPY ./settings.xml $USER_HOME_DIR/.m2/settings.xml
-COPY . ./ais_mfc
+COPY . ./automation_framework_box
 COPY commands.sh /scripts/commands.sh
 
-RUN cd ais_mfc/ \
+RUN cd automation_framework_box/ \
   && mvn clean compile
 
 RUN ["chmod", "+x", "/scripts/commands.sh"]
