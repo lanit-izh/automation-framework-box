@@ -119,6 +119,15 @@ public final class CommonStepsLibrary extends BaseSteps {
                 + "'. Не совпадает с ожидаемым значением: '" + expectedValue + '\'');
     }
 
+    @Тогда("проверить, что в поле поиска значение = {string}")
+    public void checkSearchInputValueEquals(String expectedValue) {
+        String actualValue = getUIElement(Input.class).getAttribute("value");
+        expectedValue = DataGenerator.replaceAllGeneratingValues(expectedValue);
+
+        softAssert().assertEquals(expectedValue, actualValue, "Текст элемента =" + actualValue
+                + "'. Не совпадает с ожидаемым значением: '" + expectedValue + '\'');
+    }
+
     @Тогда("проверить, что в  {element} значение = {string}")
     public void checkInputValueEquals(UIElement element, String expectedValue) {
         String actualValue = element.getText();
