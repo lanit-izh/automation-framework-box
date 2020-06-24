@@ -62,15 +62,6 @@ public class Hooks extends BaseSteps {
         if (alias_output != null) {
             if (!alias_output.isEmpty()) {
                 Map<String, Object> data = (Map<String, Object>) Context.getInstance().getBean("dataKeeper");
-//                data.remove(EXPECTED);
-//                data.remove(ACTUAL);
-//                data.remove(USER);
-//                data.remove(CURRENT_BLOCK);
-//                data.remove(CURRENT_BLOCK_NAME);
-//                data.remove(CURRENT_SUBBLOCK_NAME);
-//                data.remove(FILE_ATTACHED_STATUS);
-//                data.remove("current.stand");
-//                data.remove("LASTURL");
                 log.info("Сохранения по алиасу '" + alias_output + "' данных");
                 DataProviderHelper.saveDpData(alias_output, data);
             }
