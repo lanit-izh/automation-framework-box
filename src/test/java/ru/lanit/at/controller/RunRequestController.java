@@ -37,6 +37,7 @@ public class RunRequestController {
             JsonRequest data = gson.fromJson(json, JsonRequest.class);
             createFeatureFile(feature);
             createDefaultProperties(data);
+            createApplicationProperties(data);
             createAllureProperties();
 
             //Обнуление пути до папки allure-results
@@ -75,6 +76,29 @@ public class RunRequestController {
 
     public void createDefaultProperties(JsonRequest jsonRequest) throws IOException {
         String path = "target/test-classes/default.properties";
+
+        if (new File(path).exists()) {
+            FileUtils.forceDelete(new File(path));
+        }
+
+        File defaultProperties = new File(path);
+        try(FileOutputStream defaultPropertiesOutputStream = new FileOutputStream(defaultProperties)) {
+            String defaultPropertiesFile = "browser=" + jsonRequest.getBrowser() + "\n" +
+                    "browser.config=" + jsonRequest.getBrowser_config() + "\n" +
+                    "site.url=" + jsonRequest.getSite_url() + "\n" +
+                    "remote=" + jsonRequest.getRemote() + "\n" +
+                    "hub_url=" + jsonRequest.getHub_url() + "\n" +
+                    "proxy=" + jsonRequest.getProxy() +
+                    "proxy_config=" + jsonRequest.getProxy_config();
+
+            defaultPropertiesOutputStream.write(defaultPropertiesFile.getBytes());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createApplicationProperties(JsonRequest jsonRequest) throws IOException {
+        String path = "target/test-classes/application.properties";
 
         if (new File(path).exists()) {
             FileUtils.forceDelete(new File(path));
