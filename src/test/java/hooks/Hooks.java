@@ -27,6 +27,9 @@ public class Hooks extends BaseSteps {
         getDpData();
     }
 
+    /**
+     * Получение данных из таблицы aliases, где колонка alias_name = alias_input
+     */
     private void getDpData() {
         String alias_input = System.getProperty("alias_input");
         if (alias_input != null) {
@@ -57,6 +60,9 @@ public class Hooks extends BaseSteps {
         softAssert().flush();
     }
 
+    /**
+     * Сохранение данных в таблицу aliases, где колонка alias_name = alias_output
+     */
     private void saveDpData() {
         String alias_output = System.getProperty("alias_output");
         if (alias_output != null) {
