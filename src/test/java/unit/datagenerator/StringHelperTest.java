@@ -39,19 +39,15 @@ public class StringHelperTest {
         Assert.assertTrue(result.isEmpty(), "Строка не пустая");
     }
 
-    @Test(description = "getRandomCyrillicString кидает IllegalArgumentException для отрицательных значений")
+    @Test(description = "getRandomCyrillicString кидает IllegalArgumentException для отрицательных значений",
+            expectedExceptions = IllegalArgumentException.class)
     public void getRandomCyrillicString_negative() {
         // arrange
         int count = -1;
 
         // act
         // assert
-        try {
-            stringHelper.getRandomCyrillicString(count);
-            Assert.fail("Не сгенерировано исключение IllegalArgumentException");
-        } catch (IllegalArgumentException exception) {
-            // ignore
-        }
+        stringHelper.getRandomCyrillicString(count);
     }
 
     @Test(description = "getRandomLatinString возвращает заданное количество заглавных латинских символов")

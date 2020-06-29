@@ -65,7 +65,7 @@ public class FileHelperTest {
         Assert.assertEquals(FilenameUtils.getExtension(result.getAbsolutePath()), extension);
     }
 
-    @Test
+    @Test(expectedExceptions = NegativeArraySizeException.class)
     public void generate_negativeSizeExe() {
         // arrange
         double sizeInMB = -0.1;
@@ -73,11 +73,6 @@ public class FileHelperTest {
 
         // act
         // assert
-        try {
-            fileHelper.generate(sizeInMB, extension);
-            Assert.fail("Не сгенерировано исключение NegativeArraySizeException");
-        } catch (NegativeArraySizeException exception) {
-            // ignore
-        }
+        fileHelper.generate(sizeInMB, extension);
     }
 }
