@@ -198,6 +198,14 @@
                 <proxy_config>proxy.config.yaml</proxy_config>
             </properties>
         </profile>
+
+        <!-- Data Provider -->
+        <profile>
+            <id>9_dp</id>
+            <properties>
+                <dp.url>localhost</dp.url>
+            </properties>
+        </profile>
     </profiles>
 
 
