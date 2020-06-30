@@ -1,5 +1,4 @@
-
-package api;
+package citrus.endpoints;
 
 import com.consol.citrus.TestCase;
 import com.consol.citrus.context.TestContext;
@@ -10,18 +9,21 @@ import com.consol.citrus.message.Message;
 import com.consol.citrus.report.MessageTracingTestListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import ru.lanit.at.Config;
 import utils.AllureHelper;
 
 
 @Configuration
 public class EndpointConfig {
-
-    @Bean(name = "foass")
-    public HttpClient foass() {
+    /**
+     * Bean сервиса дата-провайдера, на указанный адрес посылаются rest-api запросы для сохранения или получения данных из базы данных
+     */
+    @Bean(name = "dataprovider")
+    public HttpClient dataprovider() {
         return CitrusEndpoints
                 .http()
                 .client()
-                .requestUrl("https://foaas.com/")
+                .requestUrl(System.getProperty("dp", Config.loadProperty("dp.url")))
                 .build();
     }
 
@@ -71,3 +73,4 @@ public class EndpointConfig {
         }
     }
 }
+

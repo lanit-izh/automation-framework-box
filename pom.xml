@@ -203,6 +203,14 @@
                 <proxy_config>proxy.config.yaml</proxy_config>
             </properties>
         </profile>
+
+        <!-- Data Provider -->
+        <profile>
+            <id>9_dp</id>
+            <properties>
+                <dp.url>localhost</dp.url>
+            </properties>
+        </profile>
     </profiles>
 
 
@@ -242,7 +250,13 @@
             <groupId>com.consol.citrus</groupId>
             <artifactId>citrus-ws</artifactId>
             <version>${citrus.version}</version>
-            <scope>test</scope>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.consol.citrus</groupId>
+            <artifactId>citrus-http</artifactId>
+            <version>${citrus.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
