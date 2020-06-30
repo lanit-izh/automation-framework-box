@@ -1,7 +1,7 @@
 package pages.yandex.pages.ru;
 
-import pages.html_elements.Text;
 import pages.yandex.pages.ru.blocks.Поисковый_блок;
+import pages.html_elements.Text;
 import ru.lanit.at.pages.AbstractPage;
 
 

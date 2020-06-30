@@ -11,9 +11,3 @@ public interface YandexSearchPage extends AbstractPage,
         SearchPageBlock.WithSearchPageBlock, Text.WithText, Input.WithInput {
 
 }
-
-
-
-
-
-
