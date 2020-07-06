@@ -71,13 +71,15 @@
                         -Xmx4G
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
-                    <testFailureIgnore>true</testFailureIgnore>
+                    <testFailureIgnore>false</testFailureIgnore>
                     <systemPropertyVariables>
                         <dataproviderthreadcount>${fork.count}</dataproviderthreadcount>
                         <parallel>methods</parallel>
                         <application.properties>/application.properties</application.properties>
                     </systemPropertyVariables>
-
+                    <excludes>
+                        <exclude>unit/**</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
             <plugin>
