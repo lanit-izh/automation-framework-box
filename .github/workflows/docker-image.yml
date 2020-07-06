@@ -11,8 +11,7 @@ jobs:
       - uses: actions/checkout@master
       - name: Unit Tests
         run: mvn clean test -Dtest=unit/**
-#        Example for Cucumber tests run
-#        run: mvn clean test -fn -Dmaven.test.failure.ignore=true -Dcucumber.options="--tags @SampleScenarioFail" -Dsite.url="https://ya.ru" -Dremote=true -Dhub_url="http://192.168.0.101:4444/wd/hub"
+  #        run: mvn clean test -fn -Dmaven.test.failure.ignore=true -Dcucumber.options="--tags @SampleScenarioFail" -Dsite.url="https://ya.ru" -Dremote=true -Dhub_url="http://192.168.0.101:4444/wd/hub"
 
   build:
     needs: test

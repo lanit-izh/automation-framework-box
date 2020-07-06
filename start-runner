@@ -1,0 +1,8 @@
+docker run -d -it --name github-runner \
+    -e RUNNER_NAME=automation-framework-box-runner \
+    -e GITHUB_ACCESS_TOKEN=8c3f0168035f42041307929c6981d29f67b99200 \
+    -e RUNNER_REPOSITORY_URL=https://github.com/k3fir4ik/automation-framework-box \
+    -e RUNNER_WORK_DIRECTORY=/ \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    alozhkin/github-runner-maven-jdk8 &&
+    docker exec -ti github-runner sh -c "touch ~/docker_password.txt && echo \"le8T#1*uQ&v\" > ~/docker_password.txt"
