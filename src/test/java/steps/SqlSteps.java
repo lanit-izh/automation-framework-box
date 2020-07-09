@@ -34,7 +34,20 @@ public class SqlSteps extends BaseSteps {
 
     @Дано("создать таблицу {string}")
     public void createTable(String name) {
-        //todo
+        try (Connection connection = DriverManager.getConnection(url, username, password)){
+            logger.info(() -> "Подключение к базе данных прошло успешно!");
+            Statement statement = connection.createStatement();
+            String createRequest = "CREATE TABLE " + name + "(\n" +
+                    "\tID serial PRIMARY KEY,\n" +
+                    "\tPRODUCT VARCHAR (255) NOT NULL,\n" +
+                    "\tPRICE integer NOT NULL\n" +
+                    ");";
+            statement.executeUpdate(createRequest);
+            logger.info(() -> "Таблица создана!");
+        } catch (SQLException e) {
+            logger.error(() -> "Ошибка выполнения запроса\n");
+            e.printStackTrace();
+        }
     }
 
     @И("получить информацию из таблицы {string}")
@@ -44,10 +57,34 @@ public class SqlSteps extends BaseSteps {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM " + table);
             while(resultSet.next()){
-                String name = resultSet.getString("name");
-                String price = resultSet.getString("duration");
-                logger.info(() -> String.format("%s - %s \n", name, price));
+                String product = resultSet.getString("PRODUCT");
+                String price = resultSet.getString("PRICE");
+                logger.info(() -> String.format("%s - %s \n", product, price));
             }
+        } catch (SQLException e) {
+            logger.error(() -> "Ошибка выполнения запроса\n");
+            e.printStackTrace();
+        }
+    }
+
+    @И("выполнить запрос {string}")
+    public void executeSqlQuery(String query) {
+        try (Connection connection = DriverManager.getConnection(url, username, password)){
+            logger.info(() -> "Подключение к базе данных прошло успешно!");
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            logger.error(() -> "Ошибка выполнения запроса\n");
+            e.printStackTrace();
+        }
+    }
+
+    @И("удалить таблицу {string}")
+    public void deleteTable(String table) {
+        try (Connection connection = DriverManager.getConnection(url, username, password)){
+            logger.info(() -> "Подключение к базе данных прошло успешно!");
+            Statement statement = connection.createStatement();
+            statement.executeQuery("DROP TABLE " + table);
         } catch (SQLException e) {
             logger.error(() -> "Ошибка выполнения запроса\n");
             e.printStackTrace();

@@ -1,8 +1,15 @@
 # language: ru
-# образец сценария для отправки и получения данных из БД
+# Образец сценария для отправки и получения данных из БД
 @SampleSql
 
 Функция: Sample SQL Scenario
 
   Сценарий: SampleSql
-    И получить информацию из таблицы "test_cases"
+    #1
+    Дано создать таблицу "PRODUCTS"
+    #2
+    И выполнить запрос "INSERT INTO PRODUCTS (PRODUCT, PRICE) VALUES ('BREAD', 30), ('CHEESE ', 45), ('WATER', 36)"
+    #3
+    И получить информацию из таблицы "PRODUCTS"
+    #4
+    И удалить таблицу "PRODUCTS"
