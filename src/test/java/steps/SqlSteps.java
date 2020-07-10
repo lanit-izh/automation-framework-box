@@ -79,6 +79,18 @@ public class SqlSteps extends BaseSteps {
         }
     }
 
+    @И("удалить запись {string} в таблице {string}")
+    public void deleteByProduct(String data, String table) {
+        try (Connection connection = DriverManager.getConnection(url, username, password)){
+            logger.info(() -> "Подключение к базе данных прошло успешно!");
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("DELETE FROM " + table + " WHERE PRODUCT = '" + data + "'");
+        } catch (SQLException e) {
+            logger.error(() -> "Ошибка выполнения запроса\n");
+            e.printStackTrace();
+        }
+    }
+
     @И("удалить таблицу {string}")
     public void deleteTable(String table) {
         try (Connection connection = DriverManager.getConnection(url, username, password)){
