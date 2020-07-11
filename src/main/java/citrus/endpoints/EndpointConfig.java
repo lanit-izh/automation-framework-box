@@ -10,7 +10,7 @@ import com.consol.citrus.report.MessageTracingTestListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.lanit.at.Config;
-import utils.AllureHelper;
+import utils.allure.AllureHelper;
 
 
 @Configuration
@@ -27,6 +27,16 @@ public class EndpointConfig {
                 .build();
     }
 
+    @Bean(name = "foass")
+    public HttpClient foass() {
+        return CitrusEndpoints
+                .http()
+                .client()
+                .requestUrl("https://foaas.com/")
+                .build();
+    }
+
+
     @Bean(name = "messageTracingTestListener")
     public MessageTracingTestListener messageTracingTestListener() {
         return new CustomMessageListener();
@@ -39,14 +49,14 @@ public class EndpointConfig {
         public void onInboundMessage(Message message, TestContext context) {
             stringBuilder.append("INBOUND_MESSAGE:").append(newLine()).append(message).append(newLine()).append(separator()).append(newLine());
             AllureHelper.attachTxt("ответ на исходящее сообщение", message.toString());
-            super.onInboundMessage(message,context);
+            super.onInboundMessage(message, context);
         }
 
         @Override
         public void onOutboundMessage(Message message, TestContext context) {
             stringBuilder.append("OUTBOUND_MESSAGE:").append(newLine()).append(message).append(newLine()).append(separator()).append(newLine());
             AllureHelper.attachTxt("исходящее сообщение", message.toString());
-            super.onInboundMessage(message,context);
+            super.onInboundMessage(message, context);
         }
 
         @Override

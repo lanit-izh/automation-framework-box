@@ -1,0 +1,21 @@
+#File for configuring chromedriver
+#Possible options:
+#capabilities
+# arguments - List<String>. Arguments for chromedriver.
+# extensions - List<String>. List of paths to chrome extensions.
+# encodedExtensions - List<String>. List of paths to encoded chrome extensions.
+# headless - boolean. Run chrome in headless mode.
+# binary - String. Path to chrome binary.
+
+arguments:
+  - --always-authorize-plugins=true
+  - --ignore-certificate-errors
+  - --disable-blink-features=BlockCredentialedSubresources
+  - --start-maximized
+  - --disable-gpu
+  - --useAutomationExtension=false
+  - --fuflo=false
+
+extensions:
+#- src/test/resources/config/chrome/extensions/Blitz-Smart-Card-Plugin-adapter_v1.1.8.crx
+#- src/test/resources/config/chrome/extensions/multipass.crx

@@ -8,7 +8,7 @@ import org.testng.collections.Maps;
 import ru.lanit.at.context.Context;
 import ru.lanit.at.driver.DriverManager;
 import ru.lanit.at.utils.ScreenShooter;
-import utils.AllureHelper;
+import utils.allure.AllureHelper;
 
 import java.util.Map;
 
