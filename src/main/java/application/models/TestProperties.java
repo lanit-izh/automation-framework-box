@@ -1,4 +1,4 @@
-package application.json;
+package application.models;
 
 
 /** Обьект с переменными для запуска тестов */

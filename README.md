@@ -46,6 +46,18 @@
  Для работы с дата провайдером в качестве сервиса для обмена данными между тестовыми запусками используется 
  [Postgrest](http://postgrest.org/en/v7.0.0/)
  , устаналивается отдельно. 
+   
+   Sql скрипт дл содоздания таблицы:
+    
+    CREATE TABLE public.aliases (
+      pipeline_id int4 NULL,
+      run_uid varchar NULL,
+      step_id int4 NULL,
+      alias_name varchar NOT NULL,
+      value jsonb NULL,
+      CONSTRAINT aliases_pk PRIMARY KEY (alias_name)
+    );
+ 
 
 #### Использование в тестах
 1. Для end-to-end тестирования необходимо указать адрес сервиса дата-провайдера в профиле, `default.properties` или в командной строке `-Ddp="http://ipaddress:port"`. 

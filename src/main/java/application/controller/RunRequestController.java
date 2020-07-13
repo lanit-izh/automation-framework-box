@@ -1,6 +1,6 @@
 package application.controller;
 
-import application.json.TestProperties;
+import application.models.TestProperties;
 import application.runner.TestRunner;
 import com.google.gson.Gson;
 import io.qameta.allure.Allure;
