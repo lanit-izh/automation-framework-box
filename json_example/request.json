@@ -1,9 +1,0 @@
-{
-  "site_url":"http://ya.ru",
-  "browser" : "chrome",
-  "browser_config" : "config/browser.config/chromedriver.config.yaml",
-  "remote":"false",
-  "hub_url" : "",
-  "proxy" : "false",
-  "proxy_config" : ""
-}

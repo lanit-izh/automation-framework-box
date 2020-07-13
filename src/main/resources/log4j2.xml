@@ -2,6 +2,7 @@
 <Configuration status="WARN" packages="scenarioReporter">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
+            <param name="Encoding" value="UTF-8"/>
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%highlight{%5p}] [%t] %c{1}(%M) - %msg%n"/>
         </Console>
     </Appenders>

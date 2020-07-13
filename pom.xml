@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                              https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -22,6 +22,7 @@
         <javassist.version>3.12.1.GA</javassist.version>
         <testng.version>6.14.3</testng.version>
         <citrus.version>2.8.0</citrus.version>
+        <springfox-swagger.version>2.9.2</springfox-swagger.version>
         <tags/>
     </properties>
     <parent>
@@ -32,19 +33,37 @@
     </parent>
 
     <build>
+
+        <resources>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/src/main/resources/config</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+
         <testResources>
             <testResource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
             </testResource>
+            <!--            <testResource>-->
+
+            <!--                <directory>src/main/resources/config</directory>-->
+            <!--                <filtering>true</filtering>-->
+            <!--            </testResource>-->
             <testResource>
                 <directory>src/test/resources</directory>
                 <filtering>true</filtering>
             </testResource>
-            <testResource>
-                <directory>src/test/resources/config</directory>
-                <filtering>true</filtering>
-            </testResource>
+            <!--            <testResource>-->
+            <!--                <directory>src/test/resources/config</directory>-->
+            <!--                <filtering>true</filtering>-->
+            <!--            </testResource>-->
         </testResources>
         <plugins>
             <!-- display active profile in compile phase -->
@@ -75,7 +94,7 @@
                     <systemPropertyVariables>
                         <dataproviderthreadcount>${fork.count}</dataproviderthreadcount>
                         <parallel>methods</parallel>
-                        <application.properties>/application.properties</application.properties>
+                        <test.properties>/default.properties</test.properties>
                     </systemPropertyVariables>
                     <excludes>
                         <exclude>unit/**</exclude>
@@ -133,88 +152,19 @@
                     <reportVersion>2.3.1</reportVersion>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <executable>true</executable>
+                    <jvmArguments>-Dfile.encoding=UTF8</jvmArguments>
+                </configuration>
+
+            </plugin>
+
 
         </plugins>
     </build>
-    <!-- profiles -->
-    <profiles>
-        <!-- browsers -->
-        <profile>
-            <id>1_firefox</id>
-            <properties>
-                <browser>firefox</browser>
-                <browser.config>config/browser.config/geckodriver.config.yaml</browser.config>
-            </properties>
-        </profile>
-        <profile>
-            <id>2_chrome</id>
-            <properties>
-                <browser>chrome</browser>
-                <browser.config>config/browser.config/chromedriver.config.yaml</browser.config>
-            </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-        <profile>
-            <id>3_opera</id>
-            <properties>
-                <browser>opera</browser>
-                <browser.config>config/browser.config/opera.config.yaml</browser.config>
-            </properties>
-        </profile>
-        <profile>
-            <id>4_edge</id>
-            <properties>
-                <browser>edge</browser>
-                <browser.config>config/browser.config/edge.config.yaml</browser.config>
-            </properties>
-
-        </profile>
-
-
-        <!-- Run Type -->
-        <profile>
-            <id>5_remote</id>
-            <properties>
-                <remote>true</remote>
-                <hub_url>http://localhost:4444/wd/hub/</hub_url>
-            </properties>
-        </profile>
-
-        <!-- STAND -->
-        <profile>
-            <id>6_test</id>
-            <properties>
-                <site.url>http://ya.ru/</site.url>
-            </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-        <profile>
-            <id>7_prod</id>
-            <properties>
-                <site.url>http://yandex.ru/</site.url>
-            </properties>
-        </profile>
-        <profile>
-            <id>8_proxy</id>
-            <properties>
-                <proxy>true</proxy>
-                <proxy_config>proxy.config.yaml</proxy_config>
-            </properties>
-        </profile>
-
-        <!-- Data Provider -->
-        <profile>
-            <id>9_dp</id>
-            <properties>
-                <dp.url>localhost</dp.url>
-            </properties>
-        </profile>
-    </profiles>
-
 
     <dependencies>
         <dependency>
@@ -222,6 +172,7 @@
             <artifactId>automation-framework-core</artifactId>
             <version>${lanit.at.framework.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
@@ -240,7 +191,7 @@
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java8</artifactId>
-            <scope>test</scope>
+            <!--            <scope>test</scope>-->
             <version>4.2.4</version>
         </dependency>
         <dependency>
@@ -252,13 +203,6 @@
             <groupId>com.consol.citrus</groupId>
             <artifactId>citrus-ws</artifactId>
             <version>${citrus.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.consol.citrus</groupId>
-            <artifactId>citrus-http</artifactId>
-            <version>${citrus.version}</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -267,7 +211,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
             <exclusions>
                 <exclusion>
                     <groupId>org.junit.vintage</groupId>
@@ -280,12 +223,50 @@
             <artifactId>gson</artifactId>
             <version>2.8.6</version>
         </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+
+        <!--Dependency for swagger ui-->
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.12</version>
-            <scope>provided</scope>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${springfox-swagger.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${springfox-swagger.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-bean-validators</artifactId>
+            <version>${springfox-swagger.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!--Dependency for working with pdf files-->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.13.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.10</version>
         </dependency>
     </dependencies>
 
