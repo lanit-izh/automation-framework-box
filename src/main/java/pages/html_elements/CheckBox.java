@@ -8,6 +8,10 @@ import ru.lanit.at.pages.element.UIElement;
 public interface CheckBox extends UIElement {
 
 
+    default boolean isChecked() {
+        return this.isSelected();
+    }
+
     default void setChecked(boolean checked) {
         if (checked) {
             if (!isChecked()) {
@@ -18,10 +22,6 @@ public interface CheckBox extends UIElement {
                 this.click();
             }
         }
-    }
-
-    default boolean isChecked() {
-        return this.isSelected();
     }
 
 

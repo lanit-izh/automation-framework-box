@@ -13,6 +13,7 @@ public interface Calculator extends UIElement {
 
     /**
      * This method demonstrates incapsulation of custom UIElements
+     *
      * @param keysToSend any charsequences to send
      */
     @Override
