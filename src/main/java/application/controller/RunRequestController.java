@@ -49,16 +49,16 @@ public class RunRequestController {
             semaphore.acquire();
             sleep(7 * SEC);
 
-            //Обнуление пути до папки allure-results
-            String path = "target/allure-results";
-            Allure.setLifecycle(new AllureLifecycle(new FileSystemResultsWriter(Paths.get(path))));
-
-            createFeatureFile(feature);
-            semaphore.release();
-
             //Запуск сценария
             new Thread(() -> {
                 try {
+                    //Обнуление пути до папки allure-results
+                    String path = "target/allure-results";
+                    Allure.setLifecycle(new AllureLifecycle(new FileSystemResultsWriter(Paths.get(path))));
+
+                    setTestProperties(data);
+                    createFeatureFile(feature);
+                    semaphore.release();
                     new TestRunner().runScenario();
                 } catch (Throwable throwable) {
                     throwable.printStackTrace();
