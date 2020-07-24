@@ -47,11 +47,12 @@ public class TestRunner
         Method method = testNGCucumberRunner.getClass().getDeclaredMethod("getFeatures");
         method.setAccessible(true);
         List<CucumberFeature> features = (List<CucumberFeature>) method.invoke(testNGCucumberRunner);
+        mTestCaseName = features.get(0).getPickles().get(0).pickle.getName();
         runRequestScenario(new PickleEventWrapperImpl(features.get(0).getPickles().get(0)), new CucumberFeatureWrapperImpl(features.get(0)));
     }
 
     @BeforeMethod
-    public void before(Method method, Object[] testData) throws InterruptedException {
+    public void before(Method method, Object[] testData) {
         Context.removeInstance();
         this.mTestCaseName = testData[0].toString();
     }
