@@ -46,18 +46,19 @@ public class RunRequestController {
 
             TestProperties data = gson.fromJson(testProperties, TestProperties.class);
 
+            semaphore.acquire();
+            sleep(7 * SEC);
+
             //Обнуление пути до папки allure-results
             String path = "target/allure-results";
             Allure.setLifecycle(new AllureLifecycle(new FileSystemResultsWriter(Paths.get(path))));
 
-            sleep(7 * SEC);
+            createFeatureFile(feature);
+            semaphore.release();
+
             //Запуск сценария
             new Thread(() -> {
                 try {
-                    semaphore.acquire();
-                    createFeatureFile(feature);
-                    setTestProperties(data);
-                    semaphore.release();
                     new TestRunner().runScenario();
                 } catch (Throwable throwable) {
                     throwable.printStackTrace();
