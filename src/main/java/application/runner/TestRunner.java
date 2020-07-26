@@ -6,6 +6,8 @@ import cucumber.api.testng.PickleEventWrapper;
 import cucumber.api.testng.TestNGCucumberRunner;
 import cucumber.runtime.model.CucumberFeature;
 import org.openqa.selenium.MutableCapabilities;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.ITest;
 import org.testng.annotations.BeforeMethod;
 import ru.lanit.at.context.Context;
@@ -28,7 +30,8 @@ import java.util.Map;
 )
 public class TestRunner
         implements ITest {
-    TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(TestRunner.class);
+    private Logger logger = LoggerFactory.getLogger(TestRunner.class);
+    private TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(TestRunner.class);
     private String mTestCaseName = "";
 
     public void runRequestScenario(PickleEventWrapper pickleWrapper, CucumberFeatureWrapper featureWrapper) throws Throwable {
@@ -48,7 +51,8 @@ public class TestRunner
         method.setAccessible(true);
         List<CucumberFeature> features = (List<CucumberFeature>) method.invoke(testNGCucumberRunner);
         mTestCaseName = features.get(0).getPickles().get(0).pickle.getName();
-        runRequestScenario(new PickleEventWrapperImpl(features.get(0).getPickles().get(0)), new CucumberFeatureWrapperImpl(features.get(0)));
+        CucumberFeature cucumberFeature = features.get(0);
+        runRequestScenario(new PickleEventWrapperImpl(cucumberFeature.getPickles().get(0)), new CucumberFeatureWrapperImpl(cucumberFeature));
     }
 
     @BeforeMethod

@@ -21,8 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.concurrent.Semaphore;
 
@@ -42,22 +42,26 @@ public class RunRequestController {
             produces = MediaType.TEXT_PLAIN_VALUE + "; charset=utf-8")
     public ResponseEntity<?> create(@RequestParam("testProperties") String testProperties, @RequestParam("feature") MultipartFile feature) {
         try {
+            String name = feature.getOriginalFilename();
+            String body = new String(feature.getBytes(), StandardCharsets.UTF_8);
+
             testProperties = URLDecoder.decode(testProperties, "UTF-8");
 
             TestProperties data = gson.fromJson(testProperties, TestProperties.class);
 
-            semaphore.acquire();
-            sleep(7 * SEC);
-
             //Запуск сценария
             new Thread(() -> {
                 try {
+                    semaphore.acquire();
+                    sleep(5 * SEC);
+
                     //Обнуление пути до папки allure-results
                     String path = "target/allure-results";
                     Allure.setLifecycle(new AllureLifecycle(new FileSystemResultsWriter(Paths.get(path))));
 
                     setTestProperties(data);
-                    createFeatureFile(feature);
+                    createFeatureFile(name, body);
+
                     semaphore.release();
                     new TestRunner().runScenario();
                 } catch (Throwable throwable) {
@@ -70,14 +74,14 @@ public class RunRequestController {
         return new ResponseEntity<>("Тест запущен успешно!", HttpStatus.OK);
     }
 
-    public void createFeatureFile(MultipartFile feature) throws IOException {
+    public void createFeatureFile(String name, String body) throws IOException {
         String path = "target/test-classes/features/";
         if (new File(path).exists()) {
             FileUtils.deleteDirectory(new File(path));
         }
         new File(new File(path).getAbsolutePath()).mkdir();
-        try (FileOutputStream featureOutputStream = new FileOutputStream(path + feature.getOriginalFilename())) {
-            featureOutputStream.write(feature.getBytes());
+        try (FileOutputStream featureOutputStream = new FileOutputStream(path + name)) {
+            featureOutputStream.write(body.getBytes());
         } catch (IOException e) {
             logger.info("Ошибка при сохранении Feature-файла!");
             e.printStackTrace();
