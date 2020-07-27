@@ -27,7 +27,7 @@
       | user_username | user_username |
       | user_password | user_password |
 
-    И удалить данные УЗ пользователя по столбцу "user_name" и значению "user_name":
+    И удалить данные УЗ пользователя по столбцу "user_name" и значению "user_name"
 
     И удалить все данные учетных записей
 

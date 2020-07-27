@@ -30,7 +30,7 @@ public class AccountSteps extends BaseSteps{
         DataProviderHelper.patchDpDataValue(key, value, list);
     }
 
-    @И("удалить данные УЗ пользователя по столбцу {string} и значению {string}:")
+    @И("удалить данные УЗ пользователя по столбцу {string} и значению {string}")
     public void deleteAccountData(String key, String value) {
         DataProviderHelper.deleteDpDataValue(key, value);
     }
