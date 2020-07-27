@@ -13,10 +13,11 @@ services:
       - DB_SCHEMA=${DB_SCHEMA}
     volumes:
       - "./initdb_dp:/docker-entrypoint-initdb.d"
-      - "./pg_data_dp:/var/lib/postgresql/data"
+      - "pg_data_dp:/var/lib/postgresql/data"
     networks:
       - postgrest-backend
     restart: always
+
   postgrest:
     container_name: postgrest
     image: postgrest/postgrest:latest
@@ -45,6 +46,11 @@ services:
       - postgrest-backend
     links:
       - postgrest:postgrest
+
+volumes:
+  pg_data_dp:
+  initdb_dp:
+
 networks:
   postgrest-backend:
     driver: bridge
