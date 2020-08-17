@@ -1,9 +1,9 @@
 package application.runner;
 
+import application.runner.testng.CucumberTestNgRunner;
+import application.runner.testng.PickleEventWrapperImpl;
 import cucumber.api.CucumberOptions;
-import cucumber.api.testng.CucumberFeatureWrapper;
 import cucumber.api.testng.PickleEventWrapper;
-import cucumber.api.testng.TestNGCucumberRunner;
 import cucumber.runtime.model.CucumberFeature;
 import org.openqa.selenium.MutableCapabilities;
 import org.slf4j.Logger;
@@ -25,16 +25,20 @@ import java.util.Map;
                 "json:target/cucumber.json",
         },
 
-        glue = {"steps", "hooks"},
-        features = "target/test-classes/features"
+        glue = {"steps", "hooks"}
 )
 public class TestRunner
         implements ITest {
-    private Logger logger = LoggerFactory.getLogger(TestRunner.class);
-    private TestNGCucumberRunner testNGCucumberRunner = new TestNGCucumberRunner(TestRunner.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(TestRunner.class);
+    private CucumberTestNgRunner testNGCucumberRunner;
     private String mTestCaseName = "";
 
-    public void runRequestScenario(PickleEventWrapper pickleWrapper, CucumberFeatureWrapper featureWrapper) throws Throwable {
+
+    public TestRunner(String featurePath) {
+        testNGCucumberRunner = new CucumberTestNgRunner(TestRunner.class, featurePath);
+    }
+
+    public void runRequestScenario(PickleEventWrapper pickleWrapper) throws Throwable {
         try {
             Map<String, String> capabilitiesMap = new HashMap<>();
             capabilitiesMap.put("name", getTestName());
@@ -47,12 +51,10 @@ public class TestRunner
     }
 
     public void runScenario() throws Throwable {
-        Method method = testNGCucumberRunner.getClass().getDeclaredMethod("getFeatures");
-        method.setAccessible(true);
-        List<CucumberFeature> features = (List<CucumberFeature>) method.invoke(testNGCucumberRunner);
+        List<CucumberFeature> features = testNGCucumberRunner.getFeatures();
         mTestCaseName = features.get(0).getPickles().get(0).pickle.getName();
         CucumberFeature cucumberFeature = features.get(0);
-        runRequestScenario(new PickleEventWrapperImpl(cucumberFeature.getPickles().get(0)), new CucumberFeatureWrapperImpl(cucumberFeature));
+        runRequestScenario(new PickleEventWrapperImpl(cucumberFeature.getPickles().get(0)));
     }
 
     @BeforeMethod

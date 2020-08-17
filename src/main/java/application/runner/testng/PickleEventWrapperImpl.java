@@ -1,4 +1,4 @@
-package application.runner;
+package application.runner.testng;
 
 import cucumber.api.testng.PickleEventWrapper;
 import gherkin.events.PickleEvent;
