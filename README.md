@@ -139,18 +139,20 @@
   
   * Можно узнать статус запущеннего теста.
      
-     
-     http://localhost:8090/status/{uuid}            
+         http://localhost:8090/status/{uuid} 
+          
   
   * Скачать zip архив содержащий Allure отчет о прохождении теста.
   
      
-      http://localhost:8090/allure/download/{uuid} 
+         http://localhost:8090/allure/download/{uuid} 
+      
  
  *  Удалить Allure отчет о прохождении теста
  
  
-    http://localhost:8090/allure/delete/{uuid}
+         http://localhost:8090/allure/delete/{uuid}
+    
      
 
  ### Github actions (CI)
