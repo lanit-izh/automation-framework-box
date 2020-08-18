@@ -133,6 +133,25 @@
     
        curl -X POST "http://localhost:8099/test" -H "accept: text/plain;charset=utf-8" -H "Content-Type: multipart/form-data" -F "feature=@SampleScenarioRU.feature;type=" -F "testProperties={ "site_url": "https:ya.ru", "browser": "chrome", "browser_config": "config/browser.config/chromedriver.config.yaml", "hub_url": "localhost", "remote": "false", "proxy": "false", "proxy_config": "", "alias_input": "", "alias_output": "" }"
   
+  Ответом на запрос приходит идентификатор запуска теста - *UUID*.
+  
+  Зная UUID запущенного теста, с помощью запросов: 
+  
+  * Можно узнать статус запущеннего теста.
+     
+     
+     http://localhost:8090/status/{uuid}            
+  
+  * Скачать zip архив содержащий Allure отчет о прохождении теста.
+  
+     
+      http://localhost:8090/allure/download/{uuid} 
+ 
+ *  Удалить Allure отчет о прохождении теста
+ 
+ 
+    http://localhost:8090/allure/delete/{uuid}
+     
 
  ### Github actions (CI)
  1. В файле .github/workflows/docker-image.yml описан пайплайн запуска unit тестов и деплой docker-образа с фреймворком в docker hub.
