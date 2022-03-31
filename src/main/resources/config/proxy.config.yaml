@@ -1,0 +1,28 @@
+#File for configuring chromedriver
+#Orbitary settings:
+# domainForAutoAuthorization - String. Name of domain on which proxy should be authorized.
+# authUsername - String. Username for domain on which proxy should be authorized.
+# authPassword - String. Password for domain on which proxy should be authorized.
+# authType - String -> AuthType. Possible variants: BASIC, NTLM.
+# trustAllServers - boolean. If proxy should trust all servers.
+# port - int. Port number.
+# startLocal - boolean. Set true if proxy should be started automatically on localhost.
+# host - String. Host of remote proxy
+# socksProxy - String. SOCKS proxy for remote proxy server.
+# socksUsername - String. SOCKS username for remote proxy server.
+# socksPassword - String. SOCKS password for remote proxy server.
+
+#startLocal: true
+
+#domainForAutoAuthorization: newmos.mos.ru
+#authUsername: mos
+#authPassword: mos
+#authType: BASIC
+#trustAllServers: true
+#
+startLocal: false
+host: cpgu-at-app-p1
+socksProxy: cpgu-at-app-p1
+port: 8084
+socksUsername: none
+socksPassword: none

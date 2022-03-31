@@ -1,0 +1,56 @@
+version: '3'
+services:
+  postgres-dp:
+    container_name: dp
+    image: postgres:11-alpine
+    ports:
+      - "${POSTGRES_DP_PORT}:5432"
+    environment:
+      - POSTGRES_USER=${POSTGRES_DP_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_DP_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DP_DB}
+      - DB_ANON_ROLE=${POSTGRES_DP_USER}
+      - DB_SCHEMA=${DB_SCHEMA}
+    volumes:
+      - "./initdb_dp:/docker-entrypoint-initdb.d"
+      - "pg_data_dp:/var/lib/postgresql/data"
+    networks:
+      - postgrest-backend
+    restart: always
+
+  postgrest:
+    container_name: postgrest
+    image: postgrest/postgrest:latest
+    ports:
+      - "${POSTGREST_PORT}:3000"
+    environment:
+      - PGRST_DB_URI=postgres://${POSTGRES_DP_USER}:${POSTGRES_DP_PASSWORD}@postgres-dp:5432/${POSTGRES_DP_DB}
+      - PGRST_DB_SCHEMA=${DB_SCHEMA}
+      - PGRST_DB_ANON_ROLE=${POSTGRES_DP_USER}
+      - PGRST_SERVER_PROXY_URI=http://127.0.0.1:${POSTGREST_PORT}
+    networks:
+      - postgrest-backend
+    restart: always
+
+  swagger-ui:
+    container_name: swagger-ui
+    image: swaggerapi/swagger-ui
+    ports:
+      - "${SWAGGER_PORT}:8080"
+    expose:
+      - "8080"
+    environment:
+      - API_URL=http://127.0.0.1:${POSTGREST_PORT}/
+    restart: always
+    networks:
+      - postgrest-backend
+    links:
+      - postgrest:postgrest
+
+volumes:
+  pg_data_dp:
+  initdb_dp:
+
+networks:
+  postgrest-backend:
+    driver: bridge

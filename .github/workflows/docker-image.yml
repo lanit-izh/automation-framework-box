@@ -1,0 +1,28 @@
+name: Docker Image CI
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+jobs:
+  test:
+    runs-on: [self-hosted]
+    steps:
+      - uses: actions/checkout@master
+      - name: Unit Tests
+        run: mvn clean test -Dtest=unit/**
+  #        run: mvn clean test -fn -Dmaven.test.failure.ignore=true -Dcucumber.options="--tags @SampleScenarioFail" -Dsite.url="https://ya.ru" -Dremote=true -Dhub_url="http://192.168.0.101:4444/wd/hub"
+
+  build:
+    needs: test
+    runs-on: [self-hosted]
+    steps:
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile -t alozhkin/automation-framework-box:latest
+
+  deploy:
+    needs: build
+    runs-on: [self-hosted]
+    steps:
+      - name: Push the Docker image
+        run: cat ~/docker_password.txt | docker login docker.io --username alozhkin --password-stdin && docker push alozhkin/automation-framework-box:latest
